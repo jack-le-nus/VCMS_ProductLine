@@ -88,7 +88,7 @@ public class CustomerPanel extends Dialog {
 	private Panel pan0=new Panel();
     private Label lblTitle=new Label("VMCS Soft Drinks Dispenser");
     private Label lblEnterCoins=new Label("Enter Coins Here");
-    private CoinInputBox coinInputBox;
+//    private CoinInputBox coinInputBox;
     private DrinkSelectionBox drinkSelectionBox;
     private WarningDisplay wndInvalidCoin=new WarningDisplay("Invalid Coin");
     private LabelledValue lbdTotalMoneyInserted=new LabelledValue("Total Money Inserted:","0 C",50);
@@ -119,11 +119,11 @@ public class CustomerPanel extends Dialog {
 			}
 		});
 		
-		coinInputBox=new CoinInputBox(txCtrl);
+//		coinInputBox=new CoinInputBox(txCtrl);
 		drinkSelectionBox=new DrinkSelectionBox(txCtrl);
 		TerminateButtonListener terminateButtonListener=new TerminateButtonListener(txCtrl);
 		
-		coinInputBox.setActive(false);
+//		coinInputBox.setActive(false);
 		drinkSelectionBox.setActive(true);
 		
 		btnTerminate.addActionListener(terminateButtonListener);
@@ -132,30 +132,30 @@ public class CustomerPanel extends Dialog {
 		lblTitle.setFont(new Font("Helvetica", Font.BOLD, 24));
 		
 		pan0.setLayout(new GridBagLayout());
-		pan0.add(lblEnterCoins,new GridBagConstraints(0,0,1,1,1.0,0.0,
-			    GridBagConstraints.WEST,GridBagConstraints.HORIZONTAL,
-			    new Insets(5,0,0,0),10,0));  
-		pan0.add(coinInputBox,new GridBagConstraints(0,1,0,1,1.0,0.0,
-			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
-			    new Insets(2,0,0,0),10,0));  
-		pan0.add(wndInvalidCoin,new GridBagConstraints(0,2,1,1,1.0,0.0,
-			    GridBagConstraints.WEST,GridBagConstraints.HORIZONTAL,
-			    new Insets(5,0,0,0),10,0));
-		pan0.add(lbdTotalMoneyInserted,new GridBagConstraints(0,3,0,1,0.0,0.0,
-			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
-			    new Insets(5,0,0,0),10,0));
+//		pan0.add(lblEnterCoins,new GridBagConstraints(0,0,1,1,1.0,0.0,
+//			    GridBagConstraints.WEST,GridBagConstraints.HORIZONTAL,
+//			    new Insets(5,0,0,0),10,0));  
+//		pan0.add(coinInputBox,new GridBagConstraints(0,1,0,1,1.0,0.0,
+//			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
+//			    new Insets(2,0,0,0),10,0));  
+//		pan0.add(wndInvalidCoin,new GridBagConstraints(0,2,1,1,1.0,0.0,
+//			    GridBagConstraints.WEST,GridBagConstraints.HORIZONTAL,
+//			    new Insets(5,0,0,0),10,0));
+//		pan0.add(lbdTotalMoneyInserted,new GridBagConstraints(0,3,0,1,0.0,0.0,
+//			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
+//			    new Insets(5,0,0,0),10,0));
 		pan0.add(drinkSelectionBox,new GridBagConstraints(0,4,0,1,0.0,0.0,
 			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
 			    new Insets(5,0,0,0),10,0));
-		pan0.add(wndNoChangeAvailable,new GridBagConstraints(0,5,0,1,0.0,0.0,
-			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
-			    new Insets(5,0,0,0),10,0));
+//		pan0.add(wndNoChangeAvailable,new GridBagConstraints(0,5,0,1,0.0,0.0,
+//			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
+//			    new Insets(5,0,0,0),10,0));
 		pan0.add(btnTerminate,new GridBagConstraints(0,6,0,1,0.0,0.0,
 			    GridBagConstraints.CENTER,GridBagConstraints.NONE,
 			    new Insets(5,0,0,0),10,0));
-		pan0.add(lbdCollectCoins,new GridBagConstraints(0,7,0,1,0.0,0.0,
-			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
-			    new Insets(5,0,0,0),10,0));
+//		pan0.add(lbdCollectCoins,new GridBagConstraints(0,7,0,1,0.0,0.0,
+//			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
+//			    new Insets(5,0,0,0),10,0));
 		pan0.add(lbdCollectCan,new GridBagConstraints(0,8,0,1,0.0,0.0,
 			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
 			    new Insets(2,0,20,0),10,0));
@@ -318,9 +318,9 @@ public class CustomerPanel extends Dialog {
 	 * @param active the active status of the CoinInputBox; TRUE to activate,
 	 * FALSE to deactivate it.
 	 */
-	public void setCoinInputBoxActive(boolean active){
-		coinInputBox.setActive(active);
-	}
+//	public void setCoinInputBoxActive(boolean active){
+//		coinInputBox.setActive(active);
+//	}
 	
 	/**
 	 * This method activates or deactivates the Terminate Button
@@ -335,9 +335,9 @@ public class CustomerPanel extends Dialog {
 	 * This method returns the CoinInputBox in the CustomerPanel.
 	 * @return the CoinInputBox display in the CustomerPanel.
 	 */
-	public CoinInputBox getCoinInputBox(){
-		return coinInputBox;
-	}
+//	public CoinInputBox getCoinInputBox(){
+//		return coinInputBox;
+//	}
 	
 	/**
 	 * This method returns the DrinkSelectionBox in the CustomerPanel.

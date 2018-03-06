@@ -33,8 +33,8 @@ public class TransactionController {
 	private MainController mainCtrl;
 	private CustomerPanel custPanel;
 	private DispenseController dispenseCtrl;
-	private ChangeGiver changeGiver;
-	private CoinReceiver coinReceiver;
+//	private ChangeGiver changeGiver;
+//	private CoinReceiver coinReceiver;
 
 	/**Set to TRUE when change is successfully issued during the transaction.*/
 	private boolean changeGiven=false;
@@ -52,8 +52,8 @@ public class TransactionController {
 	public TransactionController(MainController mainCtrl) {
 		this.mainCtrl = mainCtrl;
 		dispenseCtrl=new DispenseController(this);
-		coinReceiver=new CoinReceiver(this);
-		changeGiver=new ChangeGiver(this);
+//		coinReceiver=new CoinReceiver(this);
+//		changeGiver=new ChangeGiver(this);
 	}
 
 	/**
@@ -73,8 +73,8 @@ public class TransactionController {
 		custPanel.display();
 		dispenseCtrl.updateDrinkPanel();
 		dispenseCtrl.allowSelection(true);
-		changeGiver.displayChangeStatus();
-		coinReceiver.setActive(false);
+//		changeGiver.displayChangeStatus();
+//		coinReceiver.setActive(false);
 	}
 	
 	/**
@@ -99,11 +99,11 @@ public class TransactionController {
 		StoreItem storeItem=mainCtrl.getStoreController().getStoreItem(Store.DRINK,drinkIdentifier);
 		DrinksBrand drinksBrand=(DrinksBrand)storeItem.getContent();
 		setPrice(drinksBrand.getPrice());
-		changeGiver.resetChange();
+//		changeGiver.resetChange();
 		dispenseCtrl.ResetCan();
-		changeGiver.displayChangeStatus();
+//		changeGiver.displayChangeStatus();
 		dispenseCtrl.allowSelection(false);
-		coinReceiver.startReceiver();
+//		coinReceiver.startReceiver();
 		custPanel.setTerminateButtonActive(true);
 	}
 	
@@ -120,13 +120,13 @@ public class TransactionController {
 	 * is instructed to continue receiving the coin&#46;
 	 * @param total the total money received&#46;
 	 */
-	public void processMoneyReceived(int total){
-		if(total>=price)
-			completeTransaction();
-		else{
-			coinReceiver.continueReceive();
-		}
-	}
+//	public void processMoneyReceived(int total){
+//		if(total>=price)
+//			completeTransaction();
+//		else{
+//			coinReceiver.continueReceive();
+//		}
+//	}
 	
 	/**
 	 * This method is performed when the Transaction Controller is informed that coin
@@ -144,15 +144,15 @@ public class TransactionController {
 	public void completeTransaction(){
 		System.out.println("CompleteTransaction: Begin");
 		dispenseCtrl.dispenseDrink(selection);
-		int totalMoneyInserted=coinReceiver.getTotalInserted();
-		int change=totalMoneyInserted-price;
-		if(change>0){
-			changeGiver.giveChange(change);
-		}
-		else{
-			getCustomerPanel().setChange(0);
-		}
-		coinReceiver.storeCash();
+//		int totalMoneyInserted=coinReceiver.getTotalInserted();
+//		int change=totalMoneyInserted-price;
+//		if(change>0){
+//			changeGiver.giveChange(change);
+//		}
+//		else{
+//			getCustomerPanel().setChange(0);
+//		}
+//		coinReceiver.storeCash();
 		dispenseCtrl.allowSelection(true);
 		
 		refreshMachineryDisplay();
@@ -168,7 +168,7 @@ public class TransactionController {
 	public void terminateFault(){
 		System.out.println("TerminateFault: Begin");
 		dispenseCtrl.allowSelection(false);
-		coinReceiver.refundCash();
+//		coinReceiver.refundCash();
 		refreshMachineryDisplay();
 		System.out.println("TerminateFault: End");
 	}
@@ -188,8 +188,8 @@ public class TransactionController {
 	public void terminateTransaction(){
 		System.out.println("TerminateTransaction: Begin");
 		dispenseCtrl.allowSelection(false);
-		coinReceiver.stopReceive();
-		coinReceiver.refundCash();
+//		coinReceiver.stopReceive();
+//		coinReceiver.refundCash();
 		if(custPanel!=null){
 			custPanel.setTerminateButtonActive(false);
 		}
@@ -202,8 +202,8 @@ public class TransactionController {
 	 */
 	public void cancelTransaction(){
 		System.out.println("CancelTransaction: Begin");
-		coinReceiver.stopReceive();
-		coinReceiver.refundCash();
+//		coinReceiver.stopReceive();
+//		coinReceiver.refundCash();
 		dispenseCtrl.allowSelection(true);
 		refreshMachineryDisplay();
 		System.out.println("CancelTransaction: End");
@@ -220,7 +220,7 @@ public class TransactionController {
 		*/
 		dispenseCtrl.updateDrinkPanel();
 		dispenseCtrl.allowSelection(true);
-		changeGiver.displayChangeStatus();
+//		changeGiver.displayChangeStatus();
 		custPanel.setTerminateButtonActive(true);
 	}
 	
@@ -317,17 +317,17 @@ public class TransactionController {
 	 * This method returns the ChangeGiver.
 	 * @return the ChangeGiver.
 	 */
-	public ChangeGiver getChangeGiver(){
-		return changeGiver;
-	}
+//	public ChangeGiver getChangeGiver(){
+//		return changeGiver;
+//	}
 	
 	/**
 	 * This method returns the CoinReceiver.
 	 * @return the CoinReceiver.
 	 */
-	public CoinReceiver getCoinReceiver(){
-		return coinReceiver;
-	}
+//	public CoinReceiver getCoinReceiver(){
+//		return coinReceiver;
+//	}
 	
 	/**
 	 * This method refreshes the MachinerySimulatorPanel.
