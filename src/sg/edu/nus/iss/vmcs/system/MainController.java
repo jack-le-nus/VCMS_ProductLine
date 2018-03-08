@@ -65,7 +65,7 @@ public class MainController {
 				new CashPropertyLoader(Environment.getCashPropFile());
 			DrinkPropertyLoader drinksLoader =
 				new DrinkPropertyLoader(Environment.getDrinkPropFile());
-			cashLoader.initialize();
+//			cashLoader.initialize();
 			drinksLoader.initialize();
 			storeCtrl = new StoreController(cashLoader, drinksLoader);
 			storeCtrl.initialize();

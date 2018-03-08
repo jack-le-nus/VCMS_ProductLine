@@ -26,7 +26,7 @@ public class StoreViewer extends Panel {
 	private int type;
 	
 	/**This constant attribute holds the cash view title*/
-	public static final String CASH_VIEW_TITLE = "Quantity of Coins Available";
+//	public static final String CASH_VIEW_TITLE = "Quantity of Coins Available";
 	/**This constant attribute holds the drink view title*/
 	public static final String DRINK_VIEW_TITLE = "Quantity of Drinks Available";
 
@@ -42,9 +42,9 @@ public class StoreViewer extends Panel {
 		
 		String title = null;
 		switch (type) {
-		case Store.CASH:
-			title = CASH_VIEW_TITLE;
-			break;
+//		case Store.CASH:
+//			title = CASH_VIEW_TITLE;
+//			break;
 		case Store.DRINK:
 			title = DRINK_VIEW_TITLE;
 			break;

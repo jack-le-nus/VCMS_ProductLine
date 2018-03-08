@@ -115,7 +115,7 @@ public class SimulationController {
 			machCtrl.displayDrinkStock();
 
 			// display coin quantity;
-			machCtrl.displayCoinStock();
+//			machCtrl.displayCoinStock();
 
 			machCtrl.displayDoorState();
 		} catch (VMCSException e) {

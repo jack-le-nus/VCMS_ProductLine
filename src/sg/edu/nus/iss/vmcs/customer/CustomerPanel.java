@@ -87,14 +87,14 @@ public class CustomerPanel extends Dialog {
 
 	private Panel pan0=new Panel();
     private Label lblTitle=new Label("VMCS Soft Drinks Dispenser");
-    private Label lblEnterCoins=new Label("Enter Coins Here");
+//    private Label lblEnterCoins=new Label("Enter Coins Here");
 //    private CoinInputBox coinInputBox;
     private DrinkSelectionBox drinkSelectionBox;
-    private WarningDisplay wndInvalidCoin=new WarningDisplay("Invalid Coin");
-    private LabelledValue lbdTotalMoneyInserted=new LabelledValue("Total Money Inserted:","0 C",50);
-    private WarningDisplay wndNoChangeAvailable=new WarningDisplay("No Change Available");
+//    private WarningDisplay wndInvalidCoin=new WarningDisplay("Invalid Coin");
+//    private LabelledValue lbdTotalMoneyInserted=new LabelledValue("Total Money Inserted:","0 C",50);
+//    private WarningDisplay wndNoChangeAvailable=new WarningDisplay("No Change Available");
     private Button btnTerminate=new Button("Terminate and Return Cash");
-    private LabelledValue lbdCollectCoins=new LabelledValue("Collect Coins:","0 C",50);
+//    private LabelledValue lbdCollectCoins=new LabelledValue("Collect Coins:","0 C",50);
     private LabelledValue lbdCollectCan=new LabelledValue("Collect Can Here:","",100);
     
     /**
@@ -185,65 +185,65 @@ public class CustomerPanel extends Dialog {
 	 * This method sets the total money inserted and update the display.
 	 * @param i the total money inserted.
 	 */
-	public void setTotalMoneyInserted(int i){
-		lbdTotalMoneyInserted.setValue(i+ " C");
-	}
+//	public void setTotalMoneyInserted(int i){
+//		lbdTotalMoneyInserted.setValue(i+ " C");
+//	}
 	
 	/**
 	 * This method accumulative adds the money inserted&#46; 
 	 * @param i the money to be added to the accumulative total money inserted.
 	 * @return the accumulative total money inserted.
 	 */
-	public int addMoney(int i){
-		int intTotal=getTotalMoneyInserted();
-		intTotal+=i;
-		setTotalMoneyInserted(intTotal);
-		return intTotal;
-	}
+//	public int addMoney(int i){
+//		int intTotal=getTotalMoneyInserted();
+//		intTotal+=i;
+//		setTotalMoneyInserted(intTotal);
+//		return intTotal;
+//	}
 	
 	/**
 	 * This method returns the accumulative total money inserted.
 	 * @return the accumulative total money inserted.
 	 */
-	public int getTotalMoneyInserted(){
-		String strTotal=lbdTotalMoneyInserted.getValue();
-		strTotal=strTotal.replace('C', ' ').trim();
-		int intTotal=0;
-		try{
-			intTotal=Integer.parseInt(strTotal);
-		}
-		catch(NumberFormatException ex){
-			intTotal=0;
-		}
-		return intTotal;
-	}
+//	public int getTotalMoneyInserted(){
+//		String strTotal=lbdTotalMoneyInserted.getValue();
+//		strTotal=strTotal.replace('C', ' ').trim();
+//		int intTotal=0;
+//		try{
+//			intTotal=Integer.parseInt(strTotal);
+//		}
+//		catch(NumberFormatException ex){
+//			intTotal=0;
+//		}
+//		return intTotal;
+//	}
 	
 	/**
 	 * This method sets the change to be display.
 	 * @param i the change.
 	 */
-	public void setChange(int i){
-		lbdCollectCoins.setValue(i+" C");
-	}
+//	public void setChange(int i){
+//		lbdCollectCoins.setValue(i+" C");
+//	}
 	
 	/**
 	 * This method sets the change to be display.
 	 * @param s the change.
 	 */
-	public void setChange(String s){
-		if(s!=null&&!s.trim().equals(""))
-			s=s+" C";
-		lbdCollectCoins.setValue(s);
-	}
+//	public void setChange(String s){
+//		if(s!=null&&!s.trim().equals(""))
+//			s=s+" C";
+//		lbdCollectCoins.setValue(s);
+//	}
 	
 	/**
 	 * This method return the change displayed on the CustomerPanel.
 	 * @return the change.
 	 */
-	public String getChange(){
-		return lbdCollectCoins.getValue().replace('C', ' ').trim();
-	}
-	
+//	public String getChange(){
+//		return lbdCollectCoins.getValue().replace('C', ' ').trim();
+//	}
+//	
 	/**
 	 * This method sets the can name to the collect tray.
 	 * @param name the name of the can.
@@ -263,16 +263,16 @@ public class CustomerPanel extends Dialog {
 	/**
 	 * This method resets the total money inserted display on the CustomerPanel.
 	 */
-	public void resetTotalInserted(){
-		setTotalMoneyInserted(0);
-	}
+//	public void resetTotalInserted(){
+//		setTotalMoneyInserted(0);
+//	}
 	
 	/**
 	 * This method resets the change display on the CustomerPanel.
 	 */
-	public void resetChange(){
-		setChange("");
-	}
+//	public void resetChange(){
+//		setChange("");
+//	}
 	
 	/**
 	 * This method resets the drink can display at the collection tray.
@@ -292,17 +292,17 @@ public class CustomerPanel extends Dialog {
 	 * This method turning On or Off the "Invalid Coin" highlight.
 	 * @param isOn TRUE to turn on the highlight, otherwise, turn off the highlight.
 	 */
-	public void displayInvalidCoin(boolean isOn){
-		wndInvalidCoin.setState(isOn);
-	}
+//	public void displayInvalidCoin(boolean isOn){
+//		wndInvalidCoin.setState(isOn);
+//	}
 	
 	/**
 	 * This method turning On or Off the "No Change Available" highlight.
 	 * @param isOn TRUE to turn on the highlight, otherwise, turn off the highlight.
 	 */
-	public void displayChangeStatus(boolean isOn){
-		wndNoChangeAvailable.setState(isOn);
-	}
+//	public void displayChangeStatus(boolean isOn){
+//		wndNoChangeAvailable.setState(isOn);
+//	}
 	
 	/**
 	 * This method activates or deactivates the DrinkSelectionBox in the CustomerPanel.

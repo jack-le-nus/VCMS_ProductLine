@@ -74,7 +74,7 @@ public class DrinkSelectionBox extends Panel{
 		}
 		DrinkSelectionItem item=drinkSelectionItems[brand];
 		item.setQuantity(quantity);
-		item.setPrice(price);
+//		item.setPrice(price);
 		item.setName(name);
 	}
 	

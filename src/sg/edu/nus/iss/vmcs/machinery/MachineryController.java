@@ -147,11 +147,11 @@ public class MachineryController {
 	 * display them on the MachinerySimulatorPanel.
 	 * @throws VMCSException if fail to update cash store display.
 	 */
-	public void displayCoinStock() throws VMCSException {
-		if (ml == null)
-			return;
-		ml.getCashStoreDisplay().update();
-	}
+//	public void displayCoinStock() throws VMCSException {
+//		if (ml == null)
+//			return;
+//		ml.getCashStoreDisplay().update();
+//	}
 
 	/* ************************************************************
 	 * Interactions with the Store that need to update the display
@@ -162,11 +162,11 @@ public class MachineryController {
 	 * update the display on the MachinerySimulatorPanel.
 	 * @throws VMCSException if fail to update cash store display.
 	 */
-	public void storeCoin(Coin c) throws VMCSException {
-		storeCtrl.storeCoin(c);
-		if (ml != null)
-			ml.getCashStoreDisplay().update();
-	}
+//	public void storeCoin(Coin c) throws VMCSException {
+//		storeCtrl.storeCoin(c);
+//		if (ml != null)
+//			ml.getCashStoreDisplay().update();
+//	}
 
 	/**
 	 * This method instructs the DrinksStore to dispense one drink, and then
@@ -177,8 +177,8 @@ public class MachineryController {
 	 */
 	public void dispenseDrink(int idx) throws VMCSException {
 		storeCtrl.dispenseDrink(idx);
-		if (ml != null)
-			ml.getCashStoreDisplay().update();
+//		if (ml != null)
+//			ml.getCashStoreDisplay().update();
 
 	}
 
@@ -190,11 +190,11 @@ public class MachineryController {
 	 * @param numOfCoins the number of coins to change.
 	 * @throws VMCSException if fail to update cash store display.
 	 */
-	public void giveChange(int idx, int numOfCoins) throws VMCSException {
-		storeCtrl.giveChange(idx, numOfCoins);
-		if (ml != null)
-			ml.getCashStoreDisplay().update();
-	}
+//	public void giveChange(int idx, int numOfCoins) throws VMCSException {
+//		storeCtrl.giveChange(idx, numOfCoins);
+//		if (ml != null)
+//			ml.getCashStoreDisplay().update();
+//	}
 	
 	/**
 	 * This method refresh the MachinerySimulatorPanel.

@@ -108,17 +108,17 @@ public class MaintenanceController {
 	 * This method invoked in CoinDisplayListener.
 	 * @param idx the index of the Coin.
 	 */
-	public void displayCoin(int idx) {
-		StoreController sctrl = mCtrl.getStoreController();
-		CashStoreItem item;
-		try {
-			item = (CashStoreItem) sctrl.getStoreItem(Store.CASH, idx);
-			mpanel.getCoinDisplay().displayQty(idx, item.getQuantity());
-		} catch (VMCSException e) {
-			System.out.println("MaintenanceController.displayCoin:" + e);
-		}
-
-	}
+//	public void displayCoin(int idx) {
+//		StoreController sctrl = mCtrl.getStoreController();
+//		CashStoreItem item;
+//		try {
+//			item = (CashStoreItem) sctrl.getStoreItem(Store.CASH, idx);
+//			mpanel.getCoinDisplay().displayQty(idx, item.getQuantity());
+//		} catch (VMCSException e) {
+//			System.out.println("MaintenanceController.displayCoin:" + e);
+//		}
+//
+//	}
 
 	/**
 	 * This method will get the drink stock value and prices (for a specific brand) for
@@ -133,7 +133,7 @@ public class MaintenanceController {
 			item = (DrinksStoreItem) sctrl.getStoreItem(Store.DRINK, idx);
 			DrinksBrand db = (DrinksBrand) item.getContent();
 			mpanel.getDrinksDisplay().displayQty(idx, item.getQuantity());
-			mpanel.displayPrice(db.getPrice());
+//			mpanel.displayPrice(db.getPrice());
 		} catch (VMCSException e) {
 			System.out.println("MaintenanceController.displayDrink:" + e);
 		}
@@ -144,46 +144,46 @@ public class MaintenanceController {
 	 * This method invoked by PriceDisplayListener.
 	 * @param pr the price of the drinks.
 	 */
-	public void setPrice(int pr) {
-		StoreController sctrl = mCtrl.getStoreController();
-		int curIdx = mpanel.getCurIdx();
-		sctrl.setPrice(curIdx, pr);
-		mpanel.getDrinksDisplay().getPriceDisplay().setValue(pr + "C");
-	}
+//	public void setPrice(int pr) {
+//		StoreController sctrl = mCtrl.getStoreController();
+//		int curIdx = mpanel.getCurIdx();
+//		sctrl.setPrice(curIdx, pr);
+//		mpanel.getDrinksDisplay().getPriceDisplay().setValue(pr + "C");
+//	}
 
 	/**
 	 * This method sends the total cash held in the CashStore to the MaintenancePanel&#46
 	 * This method is invoked by the TotalCashButtonListener.
 	 */
-	public void getTotalCash() {
-		StoreController sctrl = mCtrl.getStoreController();
-		int tc = sctrl.getTotalCash();
-		mpanel.displayTotalCash(tc);
-
-	}
+//	public void getTotalCash() {
+//		StoreController sctrl = mCtrl.getStoreController();
+//		int tc = sctrl.getTotalCash();
+//		mpanel.displayTotalCash(tc);
+//
+//	}
 
 	/**
 	 * This method is to facilitate the transfer of all cash in CashStore to the maintainer&#46
 	 * This method is invoked by the TransferCashButtonListener&#46
 	 * It get all the cash from store and set store cash 0.
 	 */
-	public void transferAll() {
-		StoreController sctrl = mCtrl.getStoreController();
-		MachineryController machctrl = mCtrl.getMachineryController();
-
-		int cc; // coin quantity;
-
-		try {
-			cc = sctrl.transferAll();
-			mpanel.displayCoins(cc);
-			machctrl.displayCoinStock();
-			// the cash qty current is displayed in the Maintenance panel needs to be update to be 0;
-			// not required.
-			mpanel.updateCurrentQtyDisplay(Store.CASH, 0);
-		} catch (VMCSException e) {
-			System.out.println("MaintenanceController.transferAll:" + e);
-		}
-	}
+//	public void transferAll() {
+//		StoreController sctrl = mCtrl.getStoreController();
+//		MachineryController machctrl = mCtrl.getMachineryController();
+//
+//		int cc; // coin quantity;
+//
+//		try {
+//			cc = sctrl.transferAll();
+//			mpanel.displayCoins(cc);
+//			machctrl.displayCoinStock();
+//			// the cash qty current is displayed in the Maintenance panel needs to be update to be 0;
+//			// not required.
+//			mpanel.updateCurrentQtyDisplay(Store.CASH, 0);
+//		} catch (VMCSException e) {
+//			System.out.println("MaintenanceController.transferAll:" + e);
+//		}
+//	}
 
 	/**
 	 * This method is invoked by the StoreViewerListener.
@@ -195,8 +195,8 @@ public class MaintenanceController {
 		//StoreController sctrl = mCtrl.getStoreController();
 		try {
 			mpanel.updateQtyDisplay(type, idx, qty);
-			mpanel.initCollectCash();
-			mpanel.initTotalCash();
+//			mpanel.initCollectCash();
+//			mpanel.initTotalCash();
 		} catch (VMCSException e) {
 			System.out.println("MaintenanceController.changeStoreQty:" + e);
 		}
