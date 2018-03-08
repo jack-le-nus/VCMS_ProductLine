@@ -41,7 +41,7 @@ public class StoreController {
 	public StoreController(
 		PropertyLoader cashLoader,
 		PropertyLoader drinksLoader) {
-		this.cashLoader = cashLoader;
+//		this.cashLoader = cashLoader;
 		this.drinksLoader = drinksLoader;
 	}
 
@@ -50,7 +50,7 @@ public class StoreController {
 	 * @throws IOException if fail to initialize stores; reading properties.
 	 */
 	public void initialize() throws IOException {
-		cStore = new CashStore();
+//		cStore = new CashStore();
 		dStore = new DrinksStore();
 		initializeStores();
 	}
@@ -61,7 +61,7 @@ public class StoreController {
 	 * @throws IOException if fail to initialize stores; reading properties.
 	 */
 	private void initializeStores() throws IOException {
-		initializeCashStore();
+//		initializeCashStore();
 		initializeDrinkStore();
 	}
 
@@ -90,29 +90,29 @@ public class StoreController {
 	 * This method initialize the {@link CashStore}.
 	 * @throws IOException if fail to initialize cash store; reading properties.
 	 */
-	private void initializeCashStore() throws IOException {
-
-		// get the cash file from the environment property file;
-		int numOfItems = cashLoader.getNumOfItems();
-		cStore.setStoreSize(numOfItems);
-
-		for (int i = 0; i < numOfItems; i++) {
-		    CashStoreItem item = (CashStoreItem) cashLoader.getItem(i);
-			cStore.addItem(i, item);
-		}
-	}
+//	private void initializeCashStore() throws IOException {
+//
+//		// get the cash file from the environment property file;
+//		int numOfItems = cashLoader.getNumOfItems();
+//		cStore.setStoreSize(numOfItems);
+//
+//		for (int i = 0; i < numOfItems; i++) {
+//		    CashStoreItem item = (CashStoreItem) cashLoader.getItem(i);
+//			cStore.addItem(i, item);
+//		}
+//	}
 
 	/**
 	 * This method will instruct the {@link CashStore} to store the {@link Coin} sent as input, and
 	 * update the display on the Machinery Simulator Panel.
 	 * @param c the Coin to be stored.
 	 */
-	public void storeCoin(Coin c) {
-		int idx = cStore.findCashStoreIndex(c);
-		CashStoreItem item;
-		item = (CashStoreItem) this.getStoreItem(Store.CASH, idx);
-		item.increment();
-	}
+//	public void storeCoin(Coin c) {
+//		int idx = cStore.findCashStoreIndex(c);
+//		CashStoreItem item;
+//		item = (CashStoreItem) this.getStoreItem(Store.CASH, idx);
+//		item.increment();
+//	}
 
 	/**
 	 * This method return the total size of the {@link Store} of the given type of {@link Store}.
@@ -120,9 +120,9 @@ public class StoreController {
 	 * @return the size of the store of the given type of Store.
 	 */
 	public int getStoreSize(int type) {
-		if (type == Store.CASH)
-			return cStore.getStoreSize();
-		else
+//		if (type == Store.CASH)
+//			return cStore.getStoreSize();
+//		else
 			return dStore.getStoreSize();
 	}
 
@@ -132,9 +132,9 @@ public class StoreController {
 	 * @return an array of StoreItem.
 	 */
 	public StoreItem[] getStoreItems(int type) {
-		if (type == Store.CASH)
-			return cStore.getItems();
-		else
+//		if (type == Store.CASH)
+//			return cStore.getItems();
+//		else
 			return dStore.getItems();
 	}
 
@@ -152,9 +152,9 @@ public class StoreController {
 	 */
 	public void changeStoreQty(int type, int idx, int qty) {
 			System.out.println("StoreController.changeStoreQty: type:"+ type+ " qty:"+ qty);
-			if (type == Store.CASH)
-				cStore.setQuantity(idx, qty);
-			else
+//			if (type == Store.CASH)
+//				cStore.setQuantity(idx, qty);
+//			else
 				dStore.setQuantity(idx, qty);
 	}
 
@@ -165,9 +165,9 @@ public class StoreController {
 	 * @return the StoreItem.
 	 */
 	public StoreItem getStoreItem(int type, int idx) {
-		if (type == Store.CASH)
-			return cStore.getStoreItem(idx);
-		else
+//		if (type == Store.CASH)
+//			return cStore.getStoreItem(idx);
+//		else
 			return dStore.getStoreItem(idx);
 	}
 
@@ -184,53 +184,53 @@ public class StoreController {
 
 		bd = (DrinksBrand) item.getContent();
 
-		bd.setPrice(pr);
+//		bd.setPrice(pr);
 	}
 
 	/**
 	 * This method returns the total number of cash held in the {@link CashStore}.
 	 * @return the total number of cash held.
 	 */
-	public int getTotalCash(){
-		int i;
-		int size;
-
-		size = cStore.getStoreSize();
-		CashStoreItem item;
-		int qty;
-		int val;
-		int tc = 0;
-		Coin c;
-
-		for (i = 0; i < size; i++) {
-			item = (CashStoreItem) cStore.getStoreItem(i);
-			qty = item.getQuantity();
-			c = (Coin) item.getContent();
-			val = c.getValue();
-			tc = tc + qty * val;
-		}
-		return tc;
-	}
+//	public int getTotalCash(){
+//		int i;
+//		int size;
+//
+//		size = cStore.getStoreSize();
+//		CashStoreItem item;
+//		int qty;
+//		int val;
+//		int tc = 0;
+//		Coin c;
+//
+//		for (i = 0; i < size; i++) {
+//			item = (CashStoreItem) cStore.getStoreItem(i);
+//			qty = item.getQuantity();
+//			c = (Coin) item.getContent();
+//			val = c.getValue();
+//			tc = tc + qty * val;
+//		}
+//		return tc;
+//	}
 
 	/**
 	 * This method will instruct the {@link CashStore} to store the {@link Coin} sent as input, and then
 	 * update the display on the {@link sg.edu.nus.iss.vmcs.machinery.MachinerySimulatorPanel}.
 	 * @return the number of cash transfered.
 	 */
-	public int transferAll()  {
-		int i;
-		int cc = 0; // coin quauntity;
-		int size = cStore.getStoreSize();
-
-		CashStoreItem item;
-		for (i = 0; i < size; i++) {
-			item = (CashStoreItem) cStore.getStoreItem(i);
-			cc = cc + item.getQuantity();
-			item.setQuantity(0);
-		}
-
-		return cc;
-	}
+//	public int transferAll()  {
+//		int i;
+//		int cc = 0; // coin quauntity;
+//		int size = cStore.getStoreSize();
+//
+//		CashStoreItem item;
+//		for (i = 0; i < size; i++) {
+//			item = (CashStoreItem) cStore.getStoreItem(i);
+//			cc = cc + item.getQuantity();
+//			item.setQuantity(0);
+//		}
+//
+//		return cc;
+//	}
 
 	/**
 	 * This method will close down the store management function of the vending machine.
@@ -239,7 +239,7 @@ public class StoreController {
 	 */
 	public void closeDown() throws IOException {
 		// save back cash property;
-		saveCashProperties();
+//		saveCashProperties();
         saveDrinksProperties();
 	}
 
@@ -247,14 +247,14 @@ public class StoreController {
 	 * This method saves the attributes of the {@link CashStore} to the input file.
 	 * @throws IOException if fail to save cash properties.
 	 */
-	private void saveCashProperties() throws IOException {
-		int size = cStore.getStoreSize();
-		cashLoader.setNumOfItems(size);
-		for (int i = 0; i < size; i++) {
-			cashLoader.setItem(i, cStore.getStoreItem(i));
-		}
-		cashLoader.saveProperty();
-	}
+//	private void saveCashProperties() throws IOException {
+//		int size = cStore.getStoreSize();
+//		cashLoader.setNumOfItems(size);
+//		for (int i = 0; i < size; i++) {
+//			cashLoader.setItem(i, cStore.getStoreItem(i));
+//		}
+//		cashLoader.saveProperty();
+//	}
 
 	/**
 	 * This method saves the attributes of the {@link DrinksStore} to the input file.
@@ -288,9 +288,9 @@ public class StoreController {
 	 * @return the Store of the specified type&#46;
 	 */
 	public Store getStore(int type) {
-		if (type == Store.CASH)
-			return (Store) cStore;
-		else
+//		if (type == Store.CASH)
+//			return (Store) cStore;
+//		else
 			return (Store) dStore;
 	}
 
@@ -301,10 +301,10 @@ public class StoreController {
 	 * @param idx the index of the Coin&#46;
 	 * @param numOfCoins the number of Coin to deduct&#46; 
 	 */
-	public void giveChange(int idx, int numOfCoins)  {
-		CashStoreItem item;
-		item = (CashStoreItem) getStoreItem(Store.CASH, idx);
-		for (int i = 0; i < numOfCoins; i++)
-			item.decrement();
-	}
+//	public void giveChange(int idx, int numOfCoins)  {
+//		CashStoreItem item;
+//		item = (CashStoreItem) getStoreItem(Store.CASH, idx);
+//		for (int i = 0; i < numOfCoins; i++)
+//			item.decrement();
+//	}
 }//End of class StoreController

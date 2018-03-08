@@ -47,19 +47,19 @@ public class DrinkDisplay extends Panel {
 
 		bi.addListener(new DrinkDisplayListener(mCtrl));
 		bi.clear();
-		price = new LabelledDisplay("Brand Price", 4, LabelledDisplay.FLOW);
-
-		PriceDisplayListener pdl;
-
-		pdl = new PriceDisplayListener(mCtrl);
-		price.addListener(pdl);
+//		price = new LabelledDisplay("Brand Price", 4, LabelledDisplay.FLOW);
+//
+//		PriceDisplayListener pdl;
+//
+//		pdl = new PriceDisplayListener(mCtrl);
+//		price.addListener(pdl);
 		Panel tp = new Panel();
 		tp.setLayout(new FlowLayout(FlowLayout.CENTER));
 		tp.add(bi);
 		curIdx = 0;
 		this.add("Center", tp);
-		this.add("South", price);
-		price.setEnabled(false);
+//		this.add("South", price);
+//		price.setEnabled(false);
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class DrinkDisplay extends Panel {
 	public void displayQty(int idx, int qty) throws VMCSException {
 		curIdx = idx;
 		bi.clear();
-		price.setEnabled(true);
+//		price.setEnabled(true);
 		bi.displayQty(idx, qty);
 	}
 

@@ -31,7 +31,7 @@ import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
 public class MachinerySimulatorPanel extends Dialog {
 	private static final String TITLE = "Machinery Panel";
 
-	private StoreViewer cashDisplay;
+//	private StoreViewer cashDisplay;
 	private StoreViewer drinksDisplay;
 	private Checkbox doorDisplay;
 	private StoreController storeCtrl;
@@ -52,12 +52,12 @@ public class MachinerySimulatorPanel extends Dialog {
 		lb.setFont(new Font("Helvetica", Font.BOLD, 24));
 		lb.setAlignment(Label.CENTER);
 
-		cashDisplay = new StoreViewer(Store.CASH, storeCtrl);
+//		cashDisplay = new StoreViewer(Store.CASH, storeCtrl);
 		drinksDisplay = new StoreViewer(Store.DRINK, storeCtrl);
 
 		Panel tp = new Panel();
 		tp.setLayout(new GridLayout(0, 1));
-		tp.add(cashDisplay);
+//		tp.add(cashDisplay);
 		tp.add(drinksDisplay);
 
 		Panel dp = new Panel();
@@ -105,9 +105,9 @@ public class MachinerySimulatorPanel extends Dialog {
 	 * This method returns the CashDisplay:StoreViewer.
 	 * @return the CashDisplay:StoreViewer.
 	 */
-	public StoreViewer getCashStoreDisplay() {
-		return cashDisplay;
-	}
+//	public StoreViewer getCashStoreDisplay() {
+//		return cashDisplay;
+//	}
 
 	/**
 	 * This method returns the DrinksDisplay:StoreViewer.
@@ -131,7 +131,7 @@ public class MachinerySimulatorPanel extends Dialog {
 	 * This method refreshes the cash display and drinks display.
 	 */
 	public void refresh(){
-		cashDisplay.update();
+//		cashDisplay.update();
 		drinksDisplay.update();
 	}
 	
@@ -140,7 +140,7 @@ public class MachinerySimulatorPanel extends Dialog {
 	 * @param state TRUE to activate, FALSE to deactivate.
 	 */
 	public void setActive(boolean state) {
-		cashDisplay.setActive(state);
+//		cashDisplay.setActive(state);
 		drinksDisplay.setActive(state);
 		doorDisplay.setEnabled(state);
 	}
