@@ -32,7 +32,7 @@ public class DrinkSelectionItem extends Panel{
 	
 	private int drinkIdentifier=-1;
 	private String name="";
-//	private int price=0;
+	private int price=0;
 	private int quantity=0;
 	private boolean isActive=false;
 	private boolean isWarningOn=false;
@@ -47,7 +47,7 @@ public class DrinkSelectionItem extends Panel{
 	public DrinkSelectionItem(int drinkIdentifier, String drinkName, int drinkPrice, int quantity, boolean isActive, boolean isWarningOn){
 		this.setDrinkIdentifier(drinkIdentifier);
 		this.setName(drinkName);
-//		this.setPrice(drinkPrice);
+		this.setPrice(drinkPrice);
 		this.setState(isActive);
 		this.setItemState(isWarningOn);
 		init();
@@ -58,18 +58,18 @@ public class DrinkSelectionItem extends Panel{
 	 */
 	private void init(){
 		btn.setLabel(name);
-//		lbl.setText(""+price+" C");
+		lbl.setText(""+price+" C");
 		
-//		lbl.setBackground(Color.lightGray);
-//		lbl.setFocusable(false);
-//		lbl.setPreferredSize(new Dimension(50,24));
+		lbl.setBackground(Color.lightGray);
+		lbl.setFocusable(false);
+		lbl.setPreferredSize(new Dimension(50,24));
 		setLayout(new GridBagLayout());
 		add(btn,new GridBagConstraints(0,0,1,1,1.0,0.0,
 			    GridBagConstraints.WEST,GridBagConstraints.HORIZONTAL,
 			    new Insets(5,10,0,0),10,4));
-//		add(lbl,new GridBagConstraints(1,0,1,1,0.0,0.0,
-//			    GridBagConstraints.CENTER,GridBagConstraints.NONE,
-//			    new Insets(5,15,0,0),50,0));
+		add(lbl,new GridBagConstraints(1,0,1,1,0.0,0.0,
+			    GridBagConstraints.CENTER,GridBagConstraints.NONE,
+			    new Insets(5,15,0,0),50,0));
 		add(wnd,new GridBagConstraints(2,0,1,1,0.0,0.0,
 			    GridBagConstraints.WEST,GridBagConstraints.NONE,
 			    new Insets(5,4,0,0),10,0));
@@ -127,18 +127,18 @@ public class DrinkSelectionItem extends Panel{
 	 * This method sets the price on the Drink Selection Item.
 	 * @param price the price of the drink
 	 */
-//	public void setPrice(int price) {
-//		this.price = price;
-//		lbl.setText(price+" C");
-//	}
+	public void setPrice(int price) {
+		this.price = price;
+		lbl.setText(price+" C");
+	}
 
 	/**
 	 * This method returns the price on the Drink Selection Item.
 	 * @return int the price of the drink.
 	 */
-//	public int getPrice() {
-//		return price;
-//	}
+	public int getPrice() {
+		return price;
+	}
 	
 	/**
 	 * This method sets the quantity on the Drink Selection Item.

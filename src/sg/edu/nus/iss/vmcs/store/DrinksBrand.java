@@ -17,7 +17,7 @@ package sg.edu.nus.iss.vmcs.store;
  * @see DrinksStore
  * @see DrinksStoreItem
  * @see Store
- * @see StoreController
+ * @see StoreController1
  * @see StoreItem
  * @see StoreObject
  * 

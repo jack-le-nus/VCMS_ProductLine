@@ -7,6 +7,8 @@
  */
 package sg.edu.nus.iss.vmcs.store;
 
+import java.io.IOException;
+
 /**
  * This object represents the store of cash in the vending machine.
  * 
@@ -16,7 +18,7 @@ package sg.edu.nus.iss.vmcs.store;
  * @see DrinksStore
  * @see DrinksStoreItem
  * @see Store
- * @see StoreController
+ * @see StoreController1
  * @see StoreItem
  * @see StoreObject
  * 
@@ -31,6 +33,17 @@ public class CashStore extends Store {
 	 * This constructor creates an instance of the CashStore object.
 	 */
 	public CashStore() {
+	}
+	
+	public void initialize(PropertyLoader cashLoader)  throws IOException {
+		// get the cash file from the environment property file;
+		int numOfItems = cashLoader.getNumOfItems();
+		this.setStoreSize(numOfItems);
+
+		for (int i = 0; i < numOfItems; i++) {
+		    CashStoreItem item = (CashStoreItem) cashLoader.getItem(i);
+			this.addItem(i, item);
+		}
 	}
 	
 	/**

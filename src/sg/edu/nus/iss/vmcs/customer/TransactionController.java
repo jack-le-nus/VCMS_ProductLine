@@ -17,6 +17,10 @@ package sg.edu.nus.iss.vmcs.customer;
 
 import java.awt.Frame;
 
+import sg.edu.nus.iss.vmcs.ApplicationMediator;
+import sg.edu.nus.iss.vmcs.BaseController;
+import sg.edu.nus.iss.vmcs.MediatorNotification;
+import sg.edu.nus.iss.vmcs.NotificationType;
 import sg.edu.nus.iss.vmcs.store.DrinksBrand;
 import sg.edu.nus.iss.vmcs.store.Store;
 import sg.edu.nus.iss.vmcs.store.StoreItem;
@@ -29,12 +33,12 @@ import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
  * @author Team SE16T5E
  * @version 1.0 2008-10-01
  */
-public class TransactionController {
+public class TransactionController extends BaseController {
 	private MainController mainCtrl;
 	private CustomerPanel custPanel;
 	private DispenseController dispenseCtrl;
-//	private ChangeGiver changeGiver;
-//	private CoinReceiver coinReceiver;
+	private ChangeGiver changeGiver;
+	private CoinReceiver coinReceiver;
 
 	/**Set to TRUE when change is successfully issued during the transaction.*/
 	private boolean changeGiven=false;
@@ -49,11 +53,12 @@ public class TransactionController {
 	 * This constructor creates an instance of the TransactionController.
 	 * @param mainCtrl the MainController.
 	 */
-	public TransactionController(MainController mainCtrl) {
+	public TransactionController(MainController mainCtrl, ApplicationMediator mediator) {
+		super(mediator);
 		this.mainCtrl = mainCtrl;
 		dispenseCtrl=new DispenseController(this);
-//		coinReceiver=new CoinReceiver(this);
-//		changeGiver=new ChangeGiver(this);
+		coinReceiver=new CoinReceiver(this);
+		changeGiver=new ChangeGiver(this);
 	}
 
 	/**
@@ -73,8 +78,8 @@ public class TransactionController {
 		custPanel.display();
 		dispenseCtrl.updateDrinkPanel();
 		dispenseCtrl.allowSelection(true);
-//		changeGiver.displayChangeStatus();
-//		coinReceiver.setActive(false);
+		changeGiver.displayChangeStatus();
+		coinReceiver.setActive(false);
 	}
 	
 	/**
@@ -96,14 +101,14 @@ public class TransactionController {
 	 */
 	public void startTransaction(int drinkIdentifier){
 		setSelection(drinkIdentifier);
-		StoreItem storeItem=mainCtrl.getStoreController().getStoreItem(Store.DRINK,drinkIdentifier);
+		StoreItem storeItem=mainCtrl.getDrinksStoreController().getStoreItem(drinkIdentifier);
 		DrinksBrand drinksBrand=(DrinksBrand)storeItem.getContent();
 		setPrice(drinksBrand.getPrice());
-//		changeGiver.resetChange();
+		changeGiver.resetChange();
 		dispenseCtrl.ResetCan();
-//		changeGiver.displayChangeStatus();
+		changeGiver.displayChangeStatus();
 		dispenseCtrl.allowSelection(false);
-//		coinReceiver.startReceiver();
+		coinReceiver.startReceiver();
 		custPanel.setTerminateButtonActive(true);
 	}
 	
@@ -120,13 +125,13 @@ public class TransactionController {
 	 * is instructed to continue receiving the coin&#46;
 	 * @param total the total money received&#46;
 	 */
-//	public void processMoneyReceived(int total){
-//		if(total>=price)
-//			completeTransaction();
-//		else{
-//			coinReceiver.continueReceive();
-//		}
-//	}
+	public void processMoneyReceived(int total){
+		if(total>=price)
+			completeTransaction();
+		else{
+			coinReceiver.continueReceive();
+		}
+	}
 	
 	/**
 	 * This method is performed when the Transaction Controller is informed that coin
@@ -144,18 +149,18 @@ public class TransactionController {
 	public void completeTransaction(){
 		System.out.println("CompleteTransaction: Begin");
 		dispenseCtrl.dispenseDrink(selection);
-//		int totalMoneyInserted=coinReceiver.getTotalInserted();
-//		int change=totalMoneyInserted-price;
-//		if(change>0){
-//			changeGiver.giveChange(change);
-//		}
-//		else{
-//			getCustomerPanel().setChange(0);
-//		}
-//		coinReceiver.storeCash();
+		int totalMoneyInserted=coinReceiver.getTotalInserted();
+		int change=totalMoneyInserted-price;
+		if(change>0){
+			changeGiver.giveChange(change);
+		}
+		else{
+			getCustomerPanel().setChange(0);
+		}
+		coinReceiver.storeCash();
 		dispenseCtrl.allowSelection(true);
 		
-		refreshMachineryDisplay();
+		mediator.controllerChanged(this, new MediatorNotification(NotificationType.RefreshMachineryPanel));
 		System.out.println("CompleteTransaction: End");
 	}
 	
@@ -168,8 +173,8 @@ public class TransactionController {
 	public void terminateFault(){
 		System.out.println("TerminateFault: Begin");
 		dispenseCtrl.allowSelection(false);
-//		coinReceiver.refundCash();
-		refreshMachineryDisplay();
+		coinReceiver.refundCash();
+		mediator.controllerChanged(this, new MediatorNotification(NotificationType.RefreshMachineryPanel));
 		System.out.println("TerminateFault: End");
 	}
 	
@@ -188,12 +193,11 @@ public class TransactionController {
 	public void terminateTransaction(){
 		System.out.println("TerminateTransaction: Begin");
 		dispenseCtrl.allowSelection(false);
-//		coinReceiver.stopReceive();
-//		coinReceiver.refundCash();
+		coinReceiver.stopReceive();
+		coinReceiver.refundCash();
 		if(custPanel!=null){
 			custPanel.setTerminateButtonActive(false);
 		}
-		refreshMachineryDisplay();
 		System.out.println("TerminateTransaction: End");
 	}
 	
@@ -202,10 +206,10 @@ public class TransactionController {
 	 */
 	public void cancelTransaction(){
 		System.out.println("CancelTransaction: Begin");
-//		coinReceiver.stopReceive();
-//		coinReceiver.refundCash();
+		coinReceiver.stopReceive();
+		coinReceiver.refundCash();
 		dispenseCtrl.allowSelection(true);
-		refreshMachineryDisplay();
+		mediator.controllerChanged(this, new MediatorNotification(NotificationType.RefreshMachineryPanel));
 		System.out.println("CancelTransaction: End");
 	}
 	
@@ -220,7 +224,7 @@ public class TransactionController {
 		*/
 		dispenseCtrl.updateDrinkPanel();
 		dispenseCtrl.allowSelection(true);
-//		changeGiver.displayChangeStatus();
+		changeGiver.displayChangeStatus();
 		custPanel.setTerminateButtonActive(true);
 	}
 	
@@ -317,24 +321,16 @@ public class TransactionController {
 	 * This method returns the ChangeGiver.
 	 * @return the ChangeGiver.
 	 */
-//	public ChangeGiver getChangeGiver(){
-//		return changeGiver;
-//	}
+	public ChangeGiver getChangeGiver(){
+		return changeGiver;
+	}
 	
 	/**
 	 * This method returns the CoinReceiver.
 	 * @return the CoinReceiver.
 	 */
-//	public CoinReceiver getCoinReceiver(){
-//		return coinReceiver;
-//	}
-	
-	/**
-	 * This method refreshes the MachinerySimulatorPanel.
-	 */
-	public void refreshMachineryDisplay(){
-		mainCtrl.getMachineryController().refreshMachineryDisplay();
-		
+	public CoinReceiver getCoinReceiver(){
+		return coinReceiver;
 	}
 	
 	/**
@@ -342,5 +338,24 @@ public class TransactionController {
 	 */
 	public void nullifyCustomerPanel(){
 		custPanel=null;
+	}
+
+	@Override
+	public Object handleMessage(MediatorNotification notification) {
+		if(notification.getType() == NotificationType.LoginMaintainer) {
+			Boolean success = (Boolean)notification.getObject()[0];
+			if(success == true) {
+				terminateTransaction();
+			}
+		} else if (notification.getType() == NotificationType.LogoutMaintainer) {
+			CustomerPanel custPanel= getCustomerPanel();
+			if(custPanel!=null) {
+				refreshCustomerPanel();
+			}
+			return custPanel == null;
+		} else if (notification.getType() == NotificationType.SetupCustomer) {
+			displayCustomerPanel();
+		}
+		return null;
 	}
 }//End of class TransactionController

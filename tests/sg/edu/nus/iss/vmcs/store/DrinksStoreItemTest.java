@@ -9,7 +9,7 @@ import org.junit.Test;
 import sg.edu.nus.iss.vmcs.system.MainController;
 
 public class DrinksStoreItemTest extends TestCase{
-	private String propertyFilename=System.getProperty("propertyFilename");
+	private String propertyFilename="/Users/jackle/Documents/Materials/Design Patterns/Assignments/Github/DesignPattern.VCMS/vmcs.properties";
 	
 	@Before
 	public void setup() throws Exception{
@@ -36,9 +36,9 @@ public class DrinksStoreItemTest extends TestCase{
 	public void testSetGetContent() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getDrinksStoreController();
 		storeController.initialize();
-		DrinksStore drinkStore=(DrinksStore)storeController.getStore(Store.DRINK);
+		DrinksStore drinkStore=(DrinksStore)storeController.getStore();
 		int storeSize=drinkStore.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			DrinksStoreItem drinkStoreItem=(DrinksStoreItem)drinkStore.getStoreItem(i);
@@ -57,9 +57,9 @@ public class DrinksStoreItemTest extends TestCase{
 	public void testSetGetQuantity() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getDrinksStoreController();
 		storeController.initialize();
-		DrinksStore drinksStore=(DrinksStore)storeController.getStore(Store.DRINK);
+		DrinksStore drinksStore=(DrinksStore)storeController.getStore();
 		int storeSize=drinksStore.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			DrinksStoreItem drinksStoreItem=(DrinksStoreItem)drinksStore.getStoreItem(i);
@@ -79,9 +79,9 @@ public class DrinksStoreItemTest extends TestCase{
 	public void testStore() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getDrinksStoreController();
 		storeController.initialize();
-		DrinksStore drinksStore=(DrinksStore)storeController.getStore(Store.DRINK);
+		DrinksStore drinksStore=(DrinksStore)storeController.getStore();
 		int storeSize=drinksStore.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			DrinksStoreItem drinksStoreItem=(DrinksStoreItem)drinksStore.getStoreItem(i);
@@ -99,9 +99,9 @@ public class DrinksStoreItemTest extends TestCase{
 	public void testDecrement() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getDrinksStoreController();
 		storeController.initialize();
-		DrinksStore drinksStore=(DrinksStore)storeController.getStore(Store.DRINK);
+		DrinksStore drinksStore=(DrinksStore)storeController.getStore();
 		int storeSize=drinksStore.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			DrinksStoreItem drinksStoreItem=(DrinksStoreItem)drinksStore.getStoreItem(i);
@@ -122,9 +122,9 @@ public class DrinksStoreItemTest extends TestCase{
 	public void testIncrement() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getDrinksStoreController();
 		storeController.initialize();
-		DrinksStore drinksStore=(DrinksStore)storeController.getStore(Store.DRINK);
+		DrinksStore drinksStore=(DrinksStore)storeController.getStore();
 		int storeSize=drinksStore.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			DrinksStoreItem drinksStoreItem=(DrinksStoreItem)drinksStore.getStoreItem(i);

@@ -15,13 +15,16 @@ import java.awt.Panel;
 import java.awt.TextField;
 import java.awt.event.ActionListener;
 
+import sg.edu.nus.iss.vmcs.ControlElement;
+import sg.edu.nus.iss.vmcs.store.StoreItem;
+
 /**
  * This boundary object displays an updatable text field next to a fixed label.
  *
  * @version 3.0 5/07/2003
  * @author Olivo Miotto, Pang Ping Li
  */
-public class LabelledDisplay extends Panel {
+public class LabelledDisplay extends ControlElement {
 	/**This constant attribute denotes the default layout of the LabelledDisplay*/
 	public final static int DEFAULT = 5;
 	/**This constant attribute denotes the flow layout of the LabelledDisplay*/
@@ -118,5 +121,40 @@ public class LabelledDisplay extends Panel {
 	 */
 	public void setTextForeground(Color c) {
 		value.setForeground(c);
+	}
+	
+	@Override
+	public boolean isComposite() {
+		return false;
+	}
+
+	public void setActionCommand(String valueOf) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void update(int idx, int qty) throws VMCSException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setItems(ControlElement[] items) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setStoreItems(StoreItem[] items) {
+		// TODO Auto-generated method stub
+		
 	}
 }//End of class LabelledDisplay

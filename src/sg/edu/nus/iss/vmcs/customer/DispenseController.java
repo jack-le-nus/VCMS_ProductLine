@@ -41,9 +41,9 @@ public class DispenseController {
 			return;
 		}
 		updateDrinkSelection(-1);
-		int storeSize=txCtrl.getMainController().getStoreController().getStoreSize(Store.DRINK);
+		int storeSize=txCtrl.getMainController().getDrinksStoreController().getStoreSize();
 		for(int i=0;i<storeSize;i++){
-			StoreItem storeItem=txCtrl.getMainController().getStoreController().getStoreItem(Store.DRINK,i);
+			StoreItem storeItem=txCtrl.getMainController().getDrinksStoreController().getStoreItem(i);
 			int quantity=storeItem.getQuantity();
 			DrinksBrand drinksBrand=(DrinksBrand)storeItem.getContent();
 			String name=drinksBrand.getName();
@@ -72,11 +72,11 @@ public class DispenseController {
 			return;
 		}
 		DrinkSelectionBox drinkSelectionBox=custPanel.getDrinkSelectionBox();
-		StoreController storeCtrl=mainCtrl.getStoreController();
-		int storeSize=storeCtrl.getStoreSize(Store.DRINK);
+		StoreController storeCtrl=mainCtrl.getDrinksStoreController();
+		int storeSize=storeCtrl.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			drinkSelectionBox.setState(i,allow);
-			StoreItem storeItem=storeCtrl.getStoreItem(Store.DRINK, i);
+			StoreItem storeItem=storeCtrl.getStoreItem(i);
 			int quantity=storeItem.getQuantity();
 			if(quantity==0)
 				drinkSelectionBox.setItemState(i,true);
@@ -109,8 +109,8 @@ public class DispenseController {
 		try{
 			txCtrl.getMainController().getMachineryController().dispenseDrink(selectedBrand);
 			MainController mainCtrl=txCtrl.getMainController();
-			StoreController storeCtrl=mainCtrl.getStoreController();
-			StoreItem drinkStoreItem=storeCtrl.getStore(Store.DRINK).getStoreItem(selectedBrand);
+			StoreController storeCtrl=mainCtrl.getDrinksStoreController();
+			StoreItem drinkStoreItem=storeCtrl.getStore().getStoreItem(selectedBrand);
 			StoreObject storeObject=drinkStoreItem.getContent();
 			DrinksBrand drinksBrand=(DrinksBrand)storeObject;
 			String drinksName=drinksBrand.getName();

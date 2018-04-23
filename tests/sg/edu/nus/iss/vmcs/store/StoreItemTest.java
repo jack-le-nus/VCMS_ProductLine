@@ -35,9 +35,9 @@ public class StoreItemTest extends TestCase{
 	public void testSetGetContent() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getCashStoreController();
 		storeController.initialize();
-		Store store=(Store)storeController.getStore(Store.CASH);
+		Store store=(Store)storeController.getStore();
 		int storeSize=store.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
@@ -50,7 +50,10 @@ public class StoreItemTest extends TestCase{
 			assertNotNull(coin2);
 			assertSame(coin1,coin2);
 		}
-		store=(Store)storeController.getStore(Store.DRINK);
+		
+		storeController=mainCtrl.getDrinksStoreController();
+		storeController.initialize();
+		store=(Store)storeController.getStore();
 		storeSize=store.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
@@ -69,9 +72,9 @@ public class StoreItemTest extends TestCase{
 	public void testSetGetQuantity() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getCashStoreController();
 		storeController.initialize();
-		Store store=(Store)storeController.getStore(Store.CASH);
+		Store store=(Store)storeController.getStore();
 		int storeSize=store.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
@@ -85,7 +88,10 @@ public class StoreItemTest extends TestCase{
 			//Assert
 			assertSame(qty1,qty2);
 		}
-		store=(Store)storeController.getStore(Store.DRINK);
+		
+		storeController=mainCtrl.getDrinksStoreController();
+		storeController.initialize();
+		store=(Store)storeController.getStore();
 		storeSize=store.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
@@ -105,9 +111,9 @@ public class StoreItemTest extends TestCase{
 	public void testStore() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getCashStoreController();
 		storeController.initialize();
-		Store store=(Store)storeController.getStore(Store.CASH);
+		Store store=(Store)storeController.getStore();
 		int storeSize=store.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
@@ -119,7 +125,10 @@ public class StoreItemTest extends TestCase{
 			assertNotNull(coin2);
 			assertSame(coin1,coin2);
 		}
-		store=(Store)storeController.getStore(Store.DRINK);
+		
+		storeController=mainCtrl.getDrinksStoreController();
+		storeController.initialize();
+		store=(Store)storeController.getStore();
 		storeSize=store.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
@@ -137,9 +146,9 @@ public class StoreItemTest extends TestCase{
 	public void testDecrement() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getCashStoreController();
 		storeController.initialize();
-		Store store=(Store)storeController.getStore(Store.CASH);
+		Store store=(Store)storeController.getStore();
 		int storeSize=store.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
@@ -154,7 +163,10 @@ public class StoreItemTest extends TestCase{
 				fail();
 			}
 		}
-		store=(Store)storeController.getStore(Store.DRINK);
+		
+		storeController=mainCtrl.getDrinksStoreController();
+		storeController.initialize();
+		store=(Store)storeController.getStore();
 		storeSize=store.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
@@ -175,9 +187,9 @@ public class StoreItemTest extends TestCase{
 	public void testIncrement() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getCashStoreController();
 		storeController.initialize();
-		Store store=(Store)storeController.getStore(Store.CASH);
+		Store store=(Store)storeController.getStore();
 		int storeSize=store.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
@@ -188,7 +200,10 @@ public class StoreItemTest extends TestCase{
 			//Assert
 			assertEquals(qty1,qty2-1);
 		}
-		store=(Store)storeController.getStore(Store.DRINK);
+		
+		storeController=mainCtrl.getDrinksStoreController();
+		storeController.initialize();
+		store=(Store)storeController.getStore();
 		storeSize=store.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			StoreItem storeItem=(StoreItem)store.getStoreItem(i);

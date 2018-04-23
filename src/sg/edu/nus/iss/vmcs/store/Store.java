@@ -7,6 +7,8 @@
  */
 package sg.edu.nus.iss.vmcs.store;
 
+import java.io.IOException;
+
 /**
  * This entity object implements a generic Store&#46; It has methods to load (add) {@link StoreItem}
  * into the Store and release {@link StoreItem} from the Store.
@@ -17,7 +19,7 @@ package sg.edu.nus.iss.vmcs.store;
  * @see DrinksBrand
  * @see DrinksStore
  * @see DrinksStoreItem
- * @see StoreController
+ * @see StoreController1
  * @see StoreItem
  * @see StoreObject
  * 
@@ -47,6 +49,10 @@ public abstract class Store {
 	public Store(int itemn) {
 		size = itemn;
 		items = new StoreItem[size];
+	}
+	
+	public void initialize(PropertyLoader loader)  throws IOException {
+		
 	}
 
 	/**

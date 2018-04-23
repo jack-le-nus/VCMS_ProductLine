@@ -25,7 +25,7 @@ import sg.edu.nus.iss.vmcs.system.MainController;
  * @author Team SE16T5E
  * @version 1.0 2008-10-01
  */
-public class DrinkSelectionBox extends Panel{
+public class DrinkSelectionBox extends Panel {
 	private DrinkSelectionItem drinkSelectionItems[];
 	private TransactionController txCtrl;
 	
@@ -38,9 +38,9 @@ public class DrinkSelectionBox extends Panel{
 	public DrinkSelectionBox(TransactionController txCtrl){
 		this.txCtrl=txCtrl;
 		MainController mainCtrl=txCtrl.getMainController();
-		StoreController storeCtrl=mainCtrl.getStoreController();
-		int drinkStoreSize=storeCtrl.getStoreSize(Store.DRINK);
-		StoreItem[] drinkStoreItems=storeCtrl.getStore(Store.DRINK).getItems();
+		StoreController storeCtrl=mainCtrl.getDrinksStoreController();
+		int drinkStoreSize=storeCtrl.getStoreSize();
+		StoreItem[] drinkStoreItems=storeCtrl.getStore().getItems();
 		
 		drinkSelectionItems=new DrinkSelectionItem[drinkStoreSize];
 		
@@ -74,7 +74,7 @@ public class DrinkSelectionBox extends Panel{
 		}
 		DrinkSelectionItem item=drinkSelectionItems[brand];
 		item.setQuantity(quantity);
-//		item.setPrice(price);
+		item.setPrice(price);
 		item.setName(name);
 	}
 	
@@ -86,10 +86,10 @@ public class DrinkSelectionBox extends Panel{
 		if(drinkSelectionItems==null||drinkSelectionItems.length==0)
 			return;
 		MainController mainCtrl=txCtrl.getMainController();
-		StoreController storeCtrl=mainCtrl.getStoreController();
+		StoreController storeCtrl=mainCtrl.getDrinksStoreController();
 		for(int i=0;i<drinkSelectionItems.length;i++){
 			DrinkSelectionItem item=drinkSelectionItems[i];
-			StoreItem storeItem=storeCtrl.getStoreItem(Store.DRINK, i);
+			StoreItem storeItem=storeCtrl.getStoreItem( i);
 			int quantity=storeItem.getQuantity();
 			item.setState(active);
 		}

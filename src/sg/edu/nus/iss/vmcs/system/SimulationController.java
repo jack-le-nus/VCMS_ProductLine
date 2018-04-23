@@ -7,6 +7,10 @@
  */
 package sg.edu.nus.iss.vmcs.system;
 
+import sg.edu.nus.iss.vmcs.ApplicationMediator;
+import sg.edu.nus.iss.vmcs.BaseController;
+import sg.edu.nus.iss.vmcs.MediatorNotification;
+import sg.edu.nus.iss.vmcs.NotificationType;
 import sg.edu.nus.iss.vmcs.customer.TransactionController;
 import sg.edu.nus.iss.vmcs.machinery.MachineryController;
 import sg.edu.nus.iss.vmcs.maintenance.MaintenanceController;
@@ -19,16 +23,17 @@ import sg.edu.nus.iss.vmcs.util.VMCSException;
  * @version 3.0 5/07/2003
  * @author Olivo Miotto, Pang Ping Li
  */
-public class SimulationController {
+public class SimulationController extends BaseController {
 	private SimulatorControlPanel scp = null;
 	public  MainController        mCtrl = null;
-
+	
 	/**
 	 * This constructor creates an instance of the SimulationController object.
 	 * @param ctrl the MainController.
 	 */
-	public SimulationController(MainController ctrl) {
-		mCtrl = ctrl;
+	public SimulationController(MainController ctrl, ApplicationMediator mediator) {
+		super(mediator);
+		this.mCtrl = ctrl;
 		scp = new SimulatorControlPanel(this);
 	}
 
@@ -99,28 +104,9 @@ public class SimulationController {
 	 * <br>
 	 * 3- Deactivate the panel&#46;
 	 */
-	public void setupSimulator() {
-		//MaintenanceController maintenanceCtrl;
-		//maintenanceCtrl = mCtrl.getMaintenanceController();
-		MachineryController machCtrl;
-
-		machCtrl = mCtrl.getMachineryController();
+	public void setupMachinery() {
 		scp.setActive(SimulatorControlPanel.ACT_MACHINERY, false);
-		try {
-			// activate when not login
-			// always diaply the door locked; isOpen false
-			machCtrl.displayMachineryPanel();
-
-			// display drink stock;
-			machCtrl.displayDrinkStock();
-
-			// display coin quantity;
-//			machCtrl.displayCoinStock();
-
-			machCtrl.displayDoorState();
-		} catch (VMCSException e) {
-			System.out.println("SimulationController.setupSimulator:" + e);
-		}
+		mediator.controllerChanged(this, new MediatorNotification(NotificationType.SetupMachinery));
 	}
 
 	/**
@@ -132,10 +118,8 @@ public class SimulationController {
 	 * and also instruct them all, except for Password Box to become deactivated&#46;
 	 */
 	public void setupMaintainer() {
-		MaintenanceController mctrl;
-		mctrl = mCtrl.getMaintenanceController();
 		scp.setActive(SimulatorControlPanel.ACT_MAINTAINER, false);
-		mctrl.displayMaintenancePanel();
+		mediator.controllerChanged(this, new MediatorNotification(NotificationType.SetupMaintainer));
 	}
 	
 	/**
@@ -151,10 +135,8 @@ public class SimulationController {
 	 * 4- Activate the No Change Available Display (if necessary)&#46;
 	 */
 	public void setupCustomer() {
-		TransactionController cctrl;
-		cctrl = mCtrl.getTransactionController();
 		scp.setActive(SimulatorControlPanel.ACT_CUSTOMER, false);
-		cctrl.displayCustomerPanel();
+		mediator.controllerChanged(this, new MediatorNotification(NotificationType.SetupCustomer));
 	}
 
 	/**
@@ -163,5 +145,16 @@ public class SimulationController {
 	 */
 	public MainController getMainController() {
 		return mCtrl;
+	}
+
+	@Override
+	public Object handleMessage(MediatorNotification notification) {
+		if (notification.getType() == NotificationType.LogoutMaintainer) {
+			getSimulatorControlPanel().setActive(SimulatorControlPanel.ACT_CUSTOMER, true);
+		} else if (notification.getType() == NotificationType.SetActiveSimulatorPanel) {
+			getSimulatorControlPanel().setActive((Integer)notification.getObject()[0], (Boolean)notification.getObject()[1]);
+		}
+		
+		return null;
 	}
 }//End of class SimulationController

@@ -35,6 +35,6 @@ public class ActivateMachineryPanelButtonListener implements ActionListener {
 	 * being pressed.
 	 */
 	public void actionPerformed(ActionEvent e) {
-		ctrl.setupSimulator();
+		ctrl.setupMachinery();
 	}
 }//End of class ActivateMachineryPanelButtonListener

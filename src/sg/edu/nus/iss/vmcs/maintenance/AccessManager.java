@@ -39,12 +39,13 @@ public class AccessManager {
 	 * instruct the Password Box to become deactivated&#46;
 	 * @param ps the password to be verified&#46;
 	 */
-	public void processPassword(String ps) {
+	public boolean processPassword(String ps) {
 		boolean psr;
 
 		psr = pswd.validatePassword(ps);
 		loginState = psr;
 		mctrl.loginMaintainer(psr);
+		return psr;
 	}
 
 	/**

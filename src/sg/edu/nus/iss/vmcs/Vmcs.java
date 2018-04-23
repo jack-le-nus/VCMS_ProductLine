@@ -7,6 +7,8 @@
  */
 package sg.edu.nus.iss.vmcs;
 
+import java.io.FileInputStream;
+
 import sg.edu.nus.iss.vmcs.system.*;
 import sg.edu.nus.iss.vmcs.util.*;
 
@@ -46,6 +48,7 @@ public class Vmcs {
 	 * @param args the arguments for the main application.
 	 */
 	public static void main(String args[]) {
+		
 		String propertyFile ="vmcs.properties";
 		//Vmcs vmcs = new Vmcs(args[0]);
 		// passing file directly instead of runtime arguments

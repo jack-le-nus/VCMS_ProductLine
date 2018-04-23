@@ -19,7 +19,7 @@ import java.io.*;
  * @see DrinksStore
  * @see DrinksStoreItem
  * @see Store
- * @see StoreController
+ * @see StoreController1
  * @see StoreItem
  * @see StoreObject
  * 

@@ -87,14 +87,14 @@ public class CustomerPanel extends Dialog {
 
 	private Panel pan0=new Panel();
     private Label lblTitle=new Label("VMCS Soft Drinks Dispenser");
-//    private Label lblEnterCoins=new Label("Enter Coins Here");
-//    private CoinInputBox coinInputBox;
+    private Label lblEnterCoins=new Label("Enter Coins Here");
+    private CoinInputBox coinInputBox;
     private DrinkSelectionBox drinkSelectionBox;
-//    private WarningDisplay wndInvalidCoin=new WarningDisplay("Invalid Coin");
-//    private LabelledValue lbdTotalMoneyInserted=new LabelledValue("Total Money Inserted:","0 C",50);
-//    private WarningDisplay wndNoChangeAvailable=new WarningDisplay("No Change Available");
+    private WarningDisplay wndInvalidCoin=new WarningDisplay("Invalid Coin");
+    private LabelledValue lbdTotalMoneyInserted=new LabelledValue("Total Money Inserted:","0 C",50);
+    private WarningDisplay wndNoChangeAvailable=new WarningDisplay("No Change Available");
     private Button btnTerminate=new Button("Terminate and Return Cash");
-//    private LabelledValue lbdCollectCoins=new LabelledValue("Collect Coins:","0 C",50);
+    private LabelledValue lbdCollectCoins=new LabelledValue("Collect Coins:","0 C",50);
     private LabelledValue lbdCollectCan=new LabelledValue("Collect Can Here:","",100);
     
     /**
@@ -119,11 +119,11 @@ public class CustomerPanel extends Dialog {
 			}
 		});
 		
-//		coinInputBox=new CoinInputBox(txCtrl);
+		coinInputBox=new CoinInputBox(txCtrl);
 		drinkSelectionBox=new DrinkSelectionBox(txCtrl);
 		TerminateButtonListener terminateButtonListener=new TerminateButtonListener(txCtrl);
 		
-//		coinInputBox.setActive(false);
+		coinInputBox.setActive(false);
 		drinkSelectionBox.setActive(true);
 		
 		btnTerminate.addActionListener(terminateButtonListener);
@@ -132,30 +132,30 @@ public class CustomerPanel extends Dialog {
 		lblTitle.setFont(new Font("Helvetica", Font.BOLD, 24));
 		
 		pan0.setLayout(new GridBagLayout());
-//		pan0.add(lblEnterCoins,new GridBagConstraints(0,0,1,1,1.0,0.0,
-//			    GridBagConstraints.WEST,GridBagConstraints.HORIZONTAL,
-//			    new Insets(5,0,0,0),10,0));  
-//		pan0.add(coinInputBox,new GridBagConstraints(0,1,0,1,1.0,0.0,
-//			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
-//			    new Insets(2,0,0,0),10,0));  
-//		pan0.add(wndInvalidCoin,new GridBagConstraints(0,2,1,1,1.0,0.0,
-//			    GridBagConstraints.WEST,GridBagConstraints.HORIZONTAL,
-//			    new Insets(5,0,0,0),10,0));
-//		pan0.add(lbdTotalMoneyInserted,new GridBagConstraints(0,3,0,1,0.0,0.0,
-//			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
-//			    new Insets(5,0,0,0),10,0));
+		pan0.add(lblEnterCoins,new GridBagConstraints(0,0,1,1,1.0,0.0,
+			    GridBagConstraints.WEST,GridBagConstraints.HORIZONTAL,
+			    new Insets(5,0,0,0),10,0));  
+		pan0.add(coinInputBox,new GridBagConstraints(0,1,0,1,1.0,0.0,
+			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
+			    new Insets(2,0,0,0),10,0));  
+		pan0.add(wndInvalidCoin,new GridBagConstraints(0,2,1,1,1.0,0.0,
+			    GridBagConstraints.WEST,GridBagConstraints.HORIZONTAL,
+			    new Insets(5,0,0,0),10,0));
+		pan0.add(lbdTotalMoneyInserted,new GridBagConstraints(0,3,0,1,0.0,0.0,
+			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
+			    new Insets(5,0,0,0),10,0));
 		pan0.add(drinkSelectionBox,new GridBagConstraints(0,4,0,1,0.0,0.0,
 			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
 			    new Insets(5,0,0,0),10,0));
-//		pan0.add(wndNoChangeAvailable,new GridBagConstraints(0,5,0,1,0.0,0.0,
-//			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
-//			    new Insets(5,0,0,0),10,0));
+		pan0.add(wndNoChangeAvailable,new GridBagConstraints(0,5,0,1,0.0,0.0,
+			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
+			    new Insets(5,0,0,0),10,0));
 		pan0.add(btnTerminate,new GridBagConstraints(0,6,0,1,0.0,0.0,
 			    GridBagConstraints.CENTER,GridBagConstraints.NONE,
 			    new Insets(5,0,0,0),10,0));
-//		pan0.add(lbdCollectCoins,new GridBagConstraints(0,7,0,1,0.0,0.0,
-//			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
-//			    new Insets(5,0,0,0),10,0));
+		pan0.add(lbdCollectCoins,new GridBagConstraints(0,7,0,1,0.0,0.0,
+			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
+			    new Insets(5,0,0,0),10,0));
 		pan0.add(lbdCollectCan,new GridBagConstraints(0,8,0,1,0.0,0.0,
 			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
 			    new Insets(2,0,20,0),10,0));
@@ -185,65 +185,65 @@ public class CustomerPanel extends Dialog {
 	 * This method sets the total money inserted and update the display.
 	 * @param i the total money inserted.
 	 */
-//	public void setTotalMoneyInserted(int i){
-//		lbdTotalMoneyInserted.setValue(i+ " C");
-//	}
+	public void setTotalMoneyInserted(int i){
+		lbdTotalMoneyInserted.setValue(i+ " C");
+	}
 	
 	/**
 	 * This method accumulative adds the money inserted&#46; 
 	 * @param i the money to be added to the accumulative total money inserted.
 	 * @return the accumulative total money inserted.
 	 */
-//	public int addMoney(int i){
-//		int intTotal=getTotalMoneyInserted();
-//		intTotal+=i;
-//		setTotalMoneyInserted(intTotal);
-//		return intTotal;
-//	}
+	public int addMoney(int i){
+		int intTotal=getTotalMoneyInserted();
+		intTotal+=i;
+		setTotalMoneyInserted(intTotal);
+		return intTotal;
+	}
 	
 	/**
 	 * This method returns the accumulative total money inserted.
 	 * @return the accumulative total money inserted.
 	 */
-//	public int getTotalMoneyInserted(){
-//		String strTotal=lbdTotalMoneyInserted.getValue();
-//		strTotal=strTotal.replace('C', ' ').trim();
-//		int intTotal=0;
-//		try{
-//			intTotal=Integer.parseInt(strTotal);
-//		}
-//		catch(NumberFormatException ex){
-//			intTotal=0;
-//		}
-//		return intTotal;
-//	}
+	public int getTotalMoneyInserted(){
+		String strTotal=lbdTotalMoneyInserted.getValue();
+		strTotal=strTotal.replace('C', ' ').trim();
+		int intTotal=0;
+		try{
+			intTotal=Integer.parseInt(strTotal);
+		}
+		catch(NumberFormatException ex){
+			intTotal=0;
+		}
+		return intTotal;
+	}
 	
 	/**
 	 * This method sets the change to be display.
 	 * @param i the change.
 	 */
-//	public void setChange(int i){
-//		lbdCollectCoins.setValue(i+" C");
-//	}
+	public void setChange(int i){
+		lbdCollectCoins.setValue(i+" C");
+	}
 	
 	/**
 	 * This method sets the change to be display.
 	 * @param s the change.
 	 */
-//	public void setChange(String s){
-//		if(s!=null&&!s.trim().equals(""))
-//			s=s+" C";
-//		lbdCollectCoins.setValue(s);
-//	}
+	public void setChange(String s){
+		if(s!=null&&!s.trim().equals(""))
+			s=s+" C";
+		lbdCollectCoins.setValue(s);
+	}
 	
 	/**
 	 * This method return the change displayed on the CustomerPanel.
 	 * @return the change.
 	 */
-//	public String getChange(){
-//		return lbdCollectCoins.getValue().replace('C', ' ').trim();
-//	}
-//	
+	public String getChange(){
+		return lbdCollectCoins.getValue().replace('C', ' ').trim();
+	}
+	
 	/**
 	 * This method sets the can name to the collect tray.
 	 * @param name the name of the can.
@@ -263,16 +263,16 @@ public class CustomerPanel extends Dialog {
 	/**
 	 * This method resets the total money inserted display on the CustomerPanel.
 	 */
-//	public void resetTotalInserted(){
-//		setTotalMoneyInserted(0);
-//	}
+	public void resetTotalInserted(){
+		setTotalMoneyInserted(0);
+	}
 	
 	/**
 	 * This method resets the change display on the CustomerPanel.
 	 */
-//	public void resetChange(){
-//		setChange("");
-//	}
+	public void resetChange(){
+		setChange("");
+	}
 	
 	/**
 	 * This method resets the drink can display at the collection tray.
@@ -292,17 +292,17 @@ public class CustomerPanel extends Dialog {
 	 * This method turning On or Off the "Invalid Coin" highlight.
 	 * @param isOn TRUE to turn on the highlight, otherwise, turn off the highlight.
 	 */
-//	public void displayInvalidCoin(boolean isOn){
-//		wndInvalidCoin.setState(isOn);
-//	}
+	public void displayInvalidCoin(boolean isOn){
+		wndInvalidCoin.setState(isOn);
+	}
 	
 	/**
 	 * This method turning On or Off the "No Change Available" highlight.
 	 * @param isOn TRUE to turn on the highlight, otherwise, turn off the highlight.
 	 */
-//	public void displayChangeStatus(boolean isOn){
-//		wndNoChangeAvailable.setState(isOn);
-//	}
+	public void displayChangeStatus(boolean isOn){
+		wndNoChangeAvailable.setState(isOn);
+	}
 	
 	/**
 	 * This method activates or deactivates the DrinkSelectionBox in the CustomerPanel.
@@ -318,9 +318,9 @@ public class CustomerPanel extends Dialog {
 	 * @param active the active status of the CoinInputBox; TRUE to activate,
 	 * FALSE to deactivate it.
 	 */
-//	public void setCoinInputBoxActive(boolean active){
-//		coinInputBox.setActive(active);
-//	}
+	public void setCoinInputBoxActive(boolean active){
+		coinInputBox.setActive(active);
+	}
 	
 	/**
 	 * This method activates or deactivates the Terminate Button
@@ -335,9 +335,9 @@ public class CustomerPanel extends Dialog {
 	 * This method returns the CoinInputBox in the CustomerPanel.
 	 * @return the CoinInputBox display in the CustomerPanel.
 	 */
-//	public CoinInputBox getCoinInputBox(){
-//		return coinInputBox;
-//	}
+	public CoinInputBox getCoinInputBox(){
+		return coinInputBox;
+	}
 	
 	/**
 	 * This method returns the DrinkSelectionBox in the CustomerPanel.

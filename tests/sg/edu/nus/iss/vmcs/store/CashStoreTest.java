@@ -31,9 +31,9 @@ public class CashStoreTest extends TestCase{
 	public void testSetGetStoreSize() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getCashStoreController();
 		storeController.initialize();
-		CashStore cashStore=(CashStore)storeController.getStore(Store.CASH);
+		CashStore cashStore=(CashStore)storeController.getStore();
 		//Act getStoreSize
 		int storeSize=cashStore.getStoreSize();
 		//Act setStoreSize
@@ -46,9 +46,9 @@ public class CashStoreTest extends TestCase{
 	public void testGetItems() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getCashStoreController();
 		storeController.initialize();
-		CashStore cashStore=(CashStore)storeController.getStore(Store.CASH);
+		CashStore cashStore=(CashStore)storeController.getStore();
 		//Act getItems
 		StoreItem[] storeItems=cashStore.getItems();
 		//Assert
@@ -59,9 +59,9 @@ public class CashStoreTest extends TestCase{
 	public void testAddItem() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getCashStoreController();
 		storeController.initialize();
-		CashStore cashStore=(CashStore)storeController.getStore(Store.CASH);
+		CashStore cashStore=(CashStore)storeController.getStore();
 		int storeSize=cashStore.getStoreSize();
 		Coin coin=new Coin();
 		CashStoreItem cashStoreItem=new CashStoreItem(coin,1);
@@ -76,9 +76,9 @@ public class CashStoreTest extends TestCase{
 	public void testGetStoreItem() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getCashStoreController();
 		storeController.initialize();
-		CashStore cashStore=(CashStore)storeController.getStore(Store.CASH);
+		CashStore cashStore=(CashStore)storeController.getStore();
 		//Act getStoreItem
 		StoreItem storeItem=cashStore.getStoreItem(-1);
 		//Assert
@@ -96,9 +96,9 @@ public class CashStoreTest extends TestCase{
 	public void testFindObject() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getCashStoreController();
 		storeController.initialize();
-		CashStore cashStore=(CashStore)storeController.getStore(Store.CASH);
+		CashStore cashStore=(CashStore)storeController.getStore();
 		int storeSize=cashStore.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			CashStoreItem cashStoreItem=(CashStoreItem)cashStore.getStoreItem(i);
@@ -114,9 +114,9 @@ public class CashStoreTest extends TestCase{
 	public void testSetQuantity() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getCashStoreController();
 		storeController.initialize();
-		CashStore cashStore=(CashStore)storeController.getStore(Store.CASH);
+		CashStore cashStore=(CashStore)storeController.getStore();
 		int storeSize=cashStore.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			CashStoreItem cashStoreItem=(CashStoreItem)cashStore.getStoreItem(i);
@@ -134,9 +134,9 @@ public class CashStoreTest extends TestCase{
 	public void testFindCashStoreIndex() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getCashStoreController();
 		storeController.initialize();
-		CashStore cashStore=(CashStore)storeController.getStore(Store.CASH);
+		CashStore cashStore=(CashStore)storeController.getStore();
 		int storeSize=cashStore.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			CashStoreItem cashStoreItem=(CashStoreItem)cashStore.getStoreItem(i);
@@ -152,9 +152,9 @@ public class CashStoreTest extends TestCase{
 	public void testIsValidWeight() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getCashStoreController();
 		storeController.initialize();
-		CashStore cashStore=(CashStore)storeController.getStore(Store.CASH);
+		CashStore cashStore=(CashStore)storeController.getStore();
 		int storeSize=cashStore.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			CashStoreItem cashStoreItem=(CashStoreItem)cashStore.getStoreItem(i);
@@ -174,9 +174,9 @@ public class CashStoreTest extends TestCase{
 	public void testFindCoin() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getStoreController();
+		StoreController storeController=mainCtrl.getCashStoreController();
 		storeController.initialize();
-		CashStore cashStore=(CashStore)storeController.getStore(Store.CASH);
+		CashStore cashStore=(CashStore)storeController.getStore();
 		int storeSize=cashStore.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			CashStoreItem cashStoreItem=(CashStoreItem)cashStore.getStoreItem(i);
