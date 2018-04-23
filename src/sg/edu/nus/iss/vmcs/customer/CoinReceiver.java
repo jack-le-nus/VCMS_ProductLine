@@ -44,8 +44,8 @@ public class CoinReceiver {
 	 * Money Inserted Display on the Customer Panel.
 	 */
 	public void startReceiver(){
-		txCtrl.getCustomerPanel().setCoinInputBoxActive(true);
-		txCtrl.getCustomerPanel().setTotalMoneyInserted(0);
+		txCtrl.getCustomerCoinPanel().setCoinInputBoxActive(true);
+		txCtrl.getCustomerCoinPanel().setTotalMoneyInserted(0);
 	}
 	
 	/**
@@ -76,19 +76,19 @@ public class CoinReceiver {
 		CashStore cashStore=(CashStore)txCtrl.getMainController().getCashStoreController().getStore();
 		Coin coin=cashStore.findCoin(weight);
 		if(coin==null){
-			txCtrl.getCustomerPanel().displayInvalidCoin(true);
-			txCtrl.getCustomerPanel().setChange("Invalid Coin");
-			//txCtrl.getCustomerPanel().setCoinInputBoxActive(false);
+			txCtrl.getCustomerCoinPanel().displayInvalidCoin(true);
+			txCtrl.getCustomerCoinPanel().setChange("Invalid Coin");
+			//txCtrl.getCustomerCoinPanel().setCoinInputBoxActive(false);
 		}
 		else{
-			txCtrl.getCustomerPanel().setCoinInputBoxActive(false);
+			txCtrl.getCustomerCoinPanel().setCoinInputBoxActive(false);
 			int value=coin.getValue();
-			txCtrl.getCustomerPanel().displayInvalidCoin(false);
+			txCtrl.getCustomerCoinPanel().displayInvalidCoin(false);
 			arlCoins.add(coin);
 			setTotalInserted(getTotalInserted() + value);
-			//int total=txCtrl.getCustomerPanel().addMoney(value);
-			txCtrl.getCustomerPanel().setTotalMoneyInserted(getTotalInserted());
-			txCtrl.getCustomerPanel().setChange("");
+			//int total=txCtrl.getCustomerCoinPanel().addMoney(value);
+			txCtrl.getCustomerCoinPanel().setTotalMoneyInserted(getTotalInserted());
+			txCtrl.getCustomerCoinPanel().setChange("");
 			txCtrl.processMoneyReceived(getTotalInserted());
 		}
 	}
@@ -98,7 +98,7 @@ public class CoinReceiver {
 	 * can be received.
 	 */
 	public void continueReceive(){
-		txCtrl.getCustomerPanel().setCoinInputBoxActive(true);
+		txCtrl.getCustomerCoinPanel().setCoinInputBoxActive(true);
 	}
 	
 	/**
@@ -114,7 +114,7 @@ public class CoinReceiver {
 				machineryCtrl.storeCoin(coin);
 			}
 			resetReceived();
-			txCtrl.getCustomerPanel().setTotalMoneyInserted(0);
+			txCtrl.getCustomerCoinPanel().setTotalMoneyInserted(0);
 		}
 		catch(VMCSException ex){
 			txCtrl.terminateFault();
@@ -128,7 +128,7 @@ public class CoinReceiver {
 	 * receiving coins.
 	 */
 	public void stopReceive(){
-		CustomerPanel custPanel=txCtrl.getCustomerPanel();
+		CustomerCoinPanel custPanel=txCtrl.getCustomerCoinPanel();
 		if(custPanel==null){
 			return;
 		}
@@ -142,9 +142,9 @@ public class CoinReceiver {
 	public void refundCash(){
 		if(getTotalInserted()==0)
 			return;
-		txCtrl.getCustomerPanel().setChange(getTotalInserted());
-		txCtrl.getCustomerPanel().setTotalMoneyInserted(0);
-		txCtrl.getCustomerPanel().displayInvalidCoin(false);
+		txCtrl.getCustomerCoinPanel().setChange(getTotalInserted());
+		txCtrl.getCustomerCoinPanel().setTotalMoneyInserted(0);
+		txCtrl.getCustomerCoinPanel().displayInvalidCoin(false);
 		resetReceived();
 	}
 	
@@ -161,7 +161,7 @@ public class CoinReceiver {
 	 * @param active TRUE to activate, FALSE to deactivate the Coin Input Box.
 	 */
 	public void setActive(boolean active){
-		txCtrl.getCustomerPanel().setCoinInputBoxActive(active); 
+		txCtrl.getCustomerCoinPanel().setCoinInputBoxActive(active); 
 	}
 
 	/**

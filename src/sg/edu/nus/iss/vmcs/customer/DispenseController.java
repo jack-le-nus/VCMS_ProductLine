@@ -36,7 +36,7 @@ public class DispenseController {
      * This method updates the whole Drink Selection Box with current names, stocks and prices.
      */
 	public void updateDrinkPanel(){
-		CustomerPanel custPanel=txCtrl.getCustomerPanel();
+		CustomerDrinkPanel custPanel=txCtrl.getCustomerDrinkPanel();
 		if(custPanel==null){
 			return;
 		}
@@ -67,7 +67,7 @@ public class DispenseController {
 	 */
 	public void allowSelection(boolean allow){
 		MainController mainCtrl=txCtrl.getMainController();
-		CustomerPanel custPanel=txCtrl.getCustomerPanel();
+		CustomerDrinkPanel custPanel=txCtrl.getCustomerDrinkPanel();
 		if(custPanel==null){
 			return;
 		}
@@ -89,7 +89,7 @@ public class DispenseController {
 	 */
 	public void ResetCan(){
 		selection=-1;
-		txCtrl.getCustomerPanel().resetCan();
+		txCtrl.getCustomerDrinkPanel().resetCan();
 	}
 	
 	/**
@@ -116,9 +116,9 @@ public class DispenseController {
 			String drinksName=drinksBrand.getName();
 			int price=drinksBrand.getPrice();
 			int quantity=drinkStoreItem.getQuantity();
-			txCtrl.getCustomerPanel().setCan(drinksName);
+			txCtrl.getCustomerDrinkPanel().setCan(drinksName);
 			updateDrinkSelection(selectedBrand);
-			txCtrl.getCustomerPanel().getDrinkSelectionBox().update(selectedBrand, quantity, price, drinksName);
+			txCtrl.getCustomerDrinkPanel().getDrinkSelectionBox().update(selectedBrand, quantity, price, drinksName);
 		}
 		catch(VMCSException ex){
 			txCtrl.terminateFault();

@@ -36,6 +36,8 @@ import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
 public class TransactionController extends BaseController {
 	private MainController mainCtrl;
 	private CustomerPanel custPanel;
+	private CustomerCoinPanel custCoinPanel;
+	private CustomerDrinkPanel custDrinkPanel;
 	private DispenseController dispenseCtrl;
 	private ChangeGiver changeGiver;
 	private CoinReceiver coinReceiver;
@@ -74,7 +76,9 @@ public class TransactionController extends BaseController {
 	 */
 	public void displayCustomerPanel() {
 		SimulatorControlPanel scp = mainCtrl.getSimulatorControlPanel();
-	    custPanel = new CustomerPanel((Frame) scp, this);
+		this.custDrinkPanel = new CustomerDrinkPanel();
+		this.custCoinPanel = new CustomerCoinPanel();
+	    custPanel = new CustomerPanel((Frame) scp, this, this.custCoinPanel, this.custDrinkPanel);
 		custPanel.display();
 		dispenseCtrl.updateDrinkPanel();
 		dispenseCtrl.allowSelection(true);
@@ -99,7 +103,7 @@ public class TransactionController extends BaseController {
 	 * 5- The Coin Receiver will be instructed to start receiving the coins&#46;
 	 * @param drinkIdentifier the drink brand item identifier.
 	 */
-	public void startTransaction(int drinkIdentifier){
+	public void startTransaction(int drinkIdentifier) {
 		setSelection(drinkIdentifier);
 		StoreItem storeItem=mainCtrl.getDrinksStoreController().getStoreItem(drinkIdentifier);
 		DrinksBrand drinksBrand=(DrinksBrand)storeItem.getContent();
@@ -155,7 +159,7 @@ public class TransactionController extends BaseController {
 			changeGiver.giveChange(change);
 		}
 		else{
-			getCustomerPanel().setChange(0);
+			getCustomerCoinPanel().setChange(0);
 		}
 		coinReceiver.storeCash();
 		dispenseCtrl.allowSelection(true);
@@ -357,5 +361,21 @@ public class TransactionController extends BaseController {
 			displayCustomerPanel();
 		}
 		return null;
+	}
+
+	public CustomerCoinPanel getCustomerCoinPanel() {
+		return custCoinPanel;
+	}
+
+	public void setCustomerCoinPanel(CustomerCoinPanel custCoinPanel) {
+		this.custCoinPanel = custCoinPanel;
+	}
+
+	public CustomerDrinkPanel getCustomerDrinkPanel() {
+		return custDrinkPanel;
+	}
+
+	public void setCustomerDrinkPanel(CustomerDrinkPanel custDrinkPanel) {
+		this.custDrinkPanel = custDrinkPanel;
 	}
 }//End of class TransactionController

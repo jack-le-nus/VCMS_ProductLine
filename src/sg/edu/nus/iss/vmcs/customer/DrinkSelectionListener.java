@@ -33,7 +33,7 @@ public class DrinkSelectionListener implements ActionListener{
 	/**
 	 * This method performs actions in response to the drink button being pressed.
 	 */
-	public void actionPerformed(ActionEvent ev){
+	public void actionPerformed(ActionEvent ev) {
 		Object obj=ev.getSource();
 		Button btn=(Button)obj;
 		btn.requestFocus();

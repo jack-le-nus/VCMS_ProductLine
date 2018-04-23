@@ -36,7 +36,7 @@ public class ChangeGiver {
 	 * Customer Panel.
 	 */
 	public void resetChange(){
-		CustomerPanel custPanel=txCtrl.getCustomerPanel();
+		CustomerCoinPanel custPanel=txCtrl.getCustomerCoinPanel();
 		if(custPanel!=null){
 			custPanel.resetChange();
 		}
@@ -68,9 +68,9 @@ public class ChangeGiver {
 				}
 				txCtrl.getMainController().getMachineryController().giveChange(i,quantityRequired);
 			}
-			txCtrl.getCustomerPanel().setChange(changeRequired-changeBal);
+			txCtrl.getCustomerCoinPanel().setChange(changeRequired-changeBal);
 			if(changeBal>0)
-				txCtrl.getCustomerPanel().displayChangeStatus(true);
+				txCtrl.getCustomerCoinPanel().displayChangeStatus(true);
 		}
 		catch(VMCSException ex){
 			txCtrl.terminateFault();
@@ -84,7 +84,7 @@ public class ChangeGiver {
 	 * Available Display depending on the current change availability.
 	 */
 	public void displayChangeStatus(){
-		CustomerPanel custPanel=txCtrl.getCustomerPanel();
+		CustomerCoinPanel custPanel=txCtrl.getCustomerCoinPanel();
 		if(custPanel==null)
 			return;
 		boolean isAnyDenoEmpty=false;

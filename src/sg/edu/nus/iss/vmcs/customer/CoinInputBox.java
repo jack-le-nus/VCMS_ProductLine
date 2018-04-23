@@ -13,6 +13,7 @@ import java.awt.Insets;
 import java.awt.Panel;
 
 import sg.edu.nus.iss.vmcs.store.CashStore;
+import sg.edu.nus.iss.vmcs.store.CashStoreController;
 import sg.edu.nus.iss.vmcs.store.CashStoreItem;
 import sg.edu.nus.iss.vmcs.store.Coin;
 import sg.edu.nus.iss.vmcs.store.Store;
@@ -30,21 +31,17 @@ import sg.edu.nus.iss.vmcs.system.MainController;
 public class CoinInputBox extends Panel{
 	private CoinButton[] btnCoinButton;
 	
-	private TransactionController txCtrl;
-	
 	/**
 	 * This constructor creates an instance of the object.
 	 * @param cctrl the TransactionController.
 	 */
-	public CoinInputBox(TransactionController cctrl){
-		this.txCtrl=cctrl;
-		MainController mainCtrl=cctrl.getMainController();
-		StoreController storeCtrl=mainCtrl.getCashStoreController();
+	public CoinInputBox(CoinReceiver coinReceiver, CashStoreController cashStoreController){
+		StoreController storeCtrl=cashStoreController;
 		int cashStoreSize=storeCtrl.getStoreSize();
 		StoreItem[] cashStoreItems=storeCtrl.getStore().getItems();
 		
 		btnCoinButton=new CoinButton[cashStoreSize+1];
-		CoinInputListener coinInputListener=new CoinInputListener(txCtrl.getCoinReceiver());
+		CoinInputListener coinInputListener=new CoinInputListener(coinReceiver);
 		
 		setLayout(new GridBagLayout());
 		for(int i=0;i<cashStoreItems.length;i++){
