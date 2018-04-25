@@ -7,14 +7,6 @@
  */
 package sg.edu.nus.iss.vmcs.customer;
 
-/*
- * Copyright 2003 ISS.
- * The contents contained in this document may not be reproduced in any
- * form or by any means, without the written permission of ISS, other
- * than for the purpose for which it has been supplied.
- *
- */
-
 import java.awt.Frame;
 
 import sg.edu.nus.iss.vmcs.ApplicationMediator;
@@ -36,20 +28,10 @@ import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
 public class TransactionController extends BaseController {
 	private MainController mainCtrl;
 	private CustomerPanel custPanel;
-	private CustomerCoinPanel custCoinPanel;
-	private CustomerDrinkPanel custDrinkPanel;
 	private DispenseController dispenseCtrl;
-	private ChangeGiver changeGiver;
-	private CoinReceiver coinReceiver;
-
-	/**Set to TRUE when change is successfully issued during the transaction.*/
-	private boolean changeGiven=false;
-	/**Set to TRUE when the drink is successfully dispensed during the transaction.*/
-	private boolean drinkDispensed=false;
-	/**Price of the selected drink.*/
-	private int price=0;
-	/**Identifier of the selected drink.*/
-	private int selection=-1;
+	//#if CashPayment
+//@	private TransactionCoinController coinCtrl;
+	//#endif
 	
 	/**
 	 * This constructor creates an instance of the TransactionController.
@@ -59,8 +41,9 @@ public class TransactionController extends BaseController {
 		super(mediator);
 		this.mainCtrl = mainCtrl;
 		dispenseCtrl=new DispenseController(this);
-		coinReceiver=new CoinReceiver(this);
-		changeGiver=new ChangeGiver(this);
+		//#if CashPayment
+//@		coinCtrl = new TransactionCoinController(this);
+		//#endif
 	}
 
 	/**
@@ -76,14 +59,18 @@ public class TransactionController extends BaseController {
 	 */
 	public void displayCustomerPanel() {
 		SimulatorControlPanel scp = mainCtrl.getSimulatorControlPanel();
-		this.custDrinkPanel = new CustomerDrinkPanel();
-		this.custCoinPanel = new CustomerCoinPanel();
-	    custPanel = new CustomerPanel((Frame) scp, this, this.custCoinPanel, this.custDrinkPanel);
+		
+		custPanel = new CustomerPanel((Frame) scp, this);
+		dispenseCtrl.setupPanel(custPanel);
+		//#if CashPayment
+//@		coinCtrl.setupPanel(custPanel);
+		//#endif
+	    
 		custPanel.display();
-		dispenseCtrl.updateDrinkPanel();
-		dispenseCtrl.allowSelection(true);
-		changeGiver.displayChangeStatus();
-		coinReceiver.setActive(false);
+		dispenseCtrl.displayCustomerPanel();
+		//#if CashPayment
+//@		coinCtrl.displayCustomerPanel();
+		//#endif
 	}
 	
 	/**
@@ -104,15 +91,11 @@ public class TransactionController extends BaseController {
 	 * @param drinkIdentifier the drink brand item identifier.
 	 */
 	public void startTransaction(int drinkIdentifier) {
-		setSelection(drinkIdentifier);
-		StoreItem storeItem=mainCtrl.getDrinksStoreController().getStoreItem(drinkIdentifier);
-		DrinksBrand drinksBrand=(DrinksBrand)storeItem.getContent();
-		setPrice(drinksBrand.getPrice());
-		changeGiver.resetChange();
-		dispenseCtrl.ResetCan();
-		changeGiver.displayChangeStatus();
-		dispenseCtrl.allowSelection(false);
-		coinReceiver.startReceiver();
+		dispenseCtrl.startTransaction(drinkIdentifier);
+		//#if CashPayment
+//@		coinCtrl.startTransaction();
+		//#endif
+		
 		custPanel.setTerminateButtonActive(true);
 	}
 	
@@ -130,11 +113,15 @@ public class TransactionController extends BaseController {
 	 * @param total the total money received&#46;
 	 */
 	public void processMoneyReceived(int total){
-		if(total>=price)
-			completeTransaction();
-		else{
-			coinReceiver.continueReceive();
-		}
+		//#if CashPayment
+//@		if(total>=dispenseCtrl.getPrice())
+//@			completeTransaction();
+//@		else{
+//@			coinCtrl.processMoneyReceived();
+//@		}
+		//#else
+		completeTransaction();
+		//#endif
 	}
 	
 	/**
@@ -152,17 +139,10 @@ public class TransactionController extends BaseController {
 	 */
 	public void completeTransaction(){
 		System.out.println("CompleteTransaction: Begin");
-		dispenseCtrl.dispenseDrink(selection);
-		int totalMoneyInserted=coinReceiver.getTotalInserted();
-		int change=totalMoneyInserted-price;
-		if(change>0){
-			changeGiver.giveChange(change);
-		}
-		else{
-			getCustomerCoinPanel().setChange(0);
-		}
-		coinReceiver.storeCash();
-		dispenseCtrl.allowSelection(true);
+		//#if CashPayment
+//@		coinCtrl.completeTransaction(dispenseCtrl.getPrice());
+		//#endif
+		dispenseCtrl.completeTransaction();
 		
 		mediator.controllerChanged(this, new MediatorNotification(NotificationType.RefreshMachineryPanel));
 		System.out.println("CompleteTransaction: End");
@@ -177,7 +157,9 @@ public class TransactionController extends BaseController {
 	public void terminateFault(){
 		System.out.println("TerminateFault: Begin");
 		dispenseCtrl.allowSelection(false);
-		coinReceiver.refundCash();
+		//#if CashPayment
+//@		coinCtrl.terminateFault();
+		//#endif
 		mediator.controllerChanged(this, new MediatorNotification(NotificationType.RefreshMachineryPanel));
 		System.out.println("TerminateFault: End");
 	}
@@ -197,8 +179,13 @@ public class TransactionController extends BaseController {
 	public void terminateTransaction(){
 		System.out.println("TerminateTransaction: Begin");
 		dispenseCtrl.allowSelection(false);
-		coinReceiver.stopReceive();
-		coinReceiver.refundCash();
+		//#if CashPayment
+//@		coinCtrl.terminateTransaction();
+		//#else
+		if(custPanel!=null){
+			custPanel.setSubmitButtonActive(false);
+		}
+		//#endif
 		if(custPanel!=null){
 			custPanel.setTerminateButtonActive(false);
 		}
@@ -208,10 +195,11 @@ public class TransactionController extends BaseController {
 	/**
 	 * This method will cancel an ongoing customer transaction.
 	 */
-	public void cancelTransaction(){
+	public void cancelTransaction() {
 		System.out.println("CancelTransaction: Begin");
-		coinReceiver.stopReceive();
-		coinReceiver.refundCash();
+		//#if CashPayment
+//@		coinCtrl.cancelTransaction();
+		//#endif
 		dispenseCtrl.allowSelection(true);
 		mediator.controllerChanged(this, new MediatorNotification(NotificationType.RefreshMachineryPanel));
 		System.out.println("CancelTransaction: End");
@@ -226,9 +214,10 @@ public class TransactionController extends BaseController {
 			mainCtrl.getSimulatorControlPanel().setActive(SimulatorControlPanel.ACT_CUSTOMER,true);
 		}
 		*/
-		dispenseCtrl.updateDrinkPanel();
-		dispenseCtrl.allowSelection(true);
-		changeGiver.displayChangeStatus();
+		dispenseCtrl.refreshCustomerPanel();
+		//#if CashPayment
+//@		coinCtrl.refreshCustomerPanel();
+		//#endif
 		custPanel.setTerminateButtonActive(true);
 	}
 	
@@ -239,70 +228,6 @@ public class TransactionController extends BaseController {
 	public void closeDown() {
 		if (custPanel != null)
 			custPanel.closeDown();
-	}
-
-	/**
-	 * This method sets whether the change is given.
-	 * @param changeGiven TRUE the change is given, otherwise FALSE.
-	 */
-	public void setChangeGiven(boolean changeGiven) {
-		this.changeGiven = changeGiven;
-	}
-
-	/**
-	 * This method returns whether the change is given.
-	 * @return TRUE if the change is given, otherwise FALSE.
-	 */
-	public boolean isChangeGiven() {
-		return changeGiven;
-	}
-
-	/**
-	 * This method sets whether the drink is dispensed.
-	 * @param drinkDispensed TRUE the drink is dispensed, otherwise, FALSE.
-	 */
-	public void setDrinkDispensed(boolean drinkDispensed) {
-		this.drinkDispensed = drinkDispensed;
-	}
-
-	/**
-	 * This method returns whether the drink is dispensed.
-	 * @return TRUE if the drink is dispensed, otherwise FALSE.
-	 */
-	public boolean isDrinkDispensed() {
-		return drinkDispensed;
-	}
-
-	/**
-	 * This method sets the price of the selected drink.
-	 * @param price the price of the selected drink.
-	 */
-	public void setPrice(int price) {
-		this.price = price;
-	}
-
-	/**
-	 * This method returns the price of the selected drink.
-	 * @return the price of the selected drink.
-	 */
-	public int getPrice() {
-		return price;
-	}
-
-	/**
-	 * This method sets the selected drink index.
-	 * @param selection the selected drink index.
-	 */
-	public void setSelection(int selection) {
-		this.selection = selection;
-	}
-
-	/**
-	 * This method returns the selected drink index.
-	 * @return the selected drink index.
-	 */
-	public int getSelection() {
-		return selection;
 	}
 	
 	/**
@@ -319,22 +244,6 @@ public class TransactionController extends BaseController {
 	 */
 	public DispenseController getDispenseController(){
 		return dispenseCtrl;
-	}
-	
-	/**
-	 * This method returns the ChangeGiver.
-	 * @return the ChangeGiver.
-	 */
-	public ChangeGiver getChangeGiver(){
-		return changeGiver;
-	}
-	
-	/**
-	 * This method returns the CoinReceiver.
-	 * @return the CoinReceiver.
-	 */
-	public CoinReceiver getCoinReceiver(){
-		return coinReceiver;
 	}
 	
 	/**
@@ -361,21 +270,5 @@ public class TransactionController extends BaseController {
 			displayCustomerPanel();
 		}
 		return null;
-	}
-
-	public CustomerCoinPanel getCustomerCoinPanel() {
-		return custCoinPanel;
-	}
-
-	public void setCustomerCoinPanel(CustomerCoinPanel custCoinPanel) {
-		this.custCoinPanel = custCoinPanel;
-	}
-
-	public CustomerDrinkPanel getCustomerDrinkPanel() {
-		return custDrinkPanel;
-	}
-
-	public void setCustomerDrinkPanel(CustomerDrinkPanel custDrinkPanel) {
-		this.custDrinkPanel = custDrinkPanel;
 	}
 }//End of class TransactionController

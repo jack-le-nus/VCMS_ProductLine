@@ -8,7 +8,6 @@
 package sg.edu.nus.iss.vmcs.maintenance;
 
 import java.awt.Frame;
-
 import sg.edu.nus.iss.vmcs.ApplicationMediator;
 import sg.edu.nus.iss.vmcs.BaseController;
 import sg.edu.nus.iss.vmcs.Dispatcher;
@@ -16,8 +15,10 @@ import sg.edu.nus.iss.vmcs.MediatorNotification;
 import sg.edu.nus.iss.vmcs.NotificationType;
 import sg.edu.nus.iss.vmcs.customer.CustomerPanel;
 import sg.edu.nus.iss.vmcs.machinery.MachineryController;
-import sg.edu.nus.iss.vmcs.store.CashStoreController;
-import sg.edu.nus.iss.vmcs.store.CashStoreItem;
+//#if CashPayment
+//@import sg.edu.nus.iss.vmcs.store.CashStoreController;
+//@import sg.edu.nus.iss.vmcs.store.CashStoreItem;
+//#endif
 import sg.edu.nus.iss.vmcs.store.DrinkStoreController;
 import sg.edu.nus.iss.vmcs.store.DrinksBrand;
 import sg.edu.nus.iss.vmcs.store.DrinksStoreItem;
@@ -36,6 +37,12 @@ import sg.edu.nus.iss.vmcs.util.VMCSException;
 public class MaintenanceController extends BaseController {
 	private MainController mCtrl;
 	private MaintenancePanel mpanel;
+	//#if CashPayment
+//@	private MaintenanceCoinPanel coinPanel;
+//@	private MaintenanceCoinController coinCtrl;
+	//#endif
+	private MaintenanceDrinkPanel drinkPanel;
+	private MaintenanceDrinkController drinkCtrl;
 	private AccessManager am;
 
 	/**
@@ -46,7 +53,16 @@ public class MaintenanceController extends BaseController {
 		super(mediator);
 		mCtrl = mctrl;
 		am = new AccessManager(this);
-		this.configureCommands();
+		
+		drinkCtrl = new MaintenanceDrinkController(mCtrl.getDrinksStoreController());
+		
+		//#if CashPayment
+//@		coinCtrl = new MaintenanceCoinController(mCtrl.getCashStoreController(), this, mediator);
+		//#endif
+		
+		//#if CashPayment
+//@		this.configureCommands();
+		//#endif
 	}
 
 	/**
@@ -62,8 +78,14 @@ public class MaintenanceController extends BaseController {
 	 */
 	public void displayMaintenancePanel() {
 		SimulatorControlPanel scp = mCtrl.getSimulatorControlPanel();
-		if (mpanel == null)
+		if (mpanel == null) {
 			mpanel = new MaintenancePanel((Frame) scp, this);
+			drinkCtrl.setupPanel(mpanel);
+			//#if CashPayment
+//@			coinCtrl.setupPanel(mpanel);
+			//#endif
+			mpanel.initialize();
+		}
 		mpanel.display();
 		mpanel.setActive(MaintenancePanel.DIALOG, true);
 		// setActive of password, invalid and valid display.
@@ -109,102 +131,6 @@ public class MaintenanceController extends BaseController {
 		
 		return success;
 	}
-
-	/**
-	 * This method will be used to get the total number of coins of a selected denomination&#46
-	 * This method invoked in CoinDisplayListener.
-	 * @param idx the index of the Coin.
-	 */
-	public void displayCoin(int idx) {
-		CashStoreController sctrl = mCtrl.getCashStoreController();
-		CashStoreItem item;
-		try {
-			item = (CashStoreItem) sctrl.getStoreItem(idx);
-			mpanel.getCoinDisplay().update(idx, item.getQuantity());
-		} catch (VMCSException e) {
-			System.out.println("MaintenanceController.displayCoin:" + e);
-		}
-
-	}
-
-	/**
-	 * This method will get the drink stock value and prices (for a specific brand) for
-	 * display&#46
-	 * This method invoked in DrinkDisplayListener.
-	 * @param idx the index of the drinks.
-	 */
-	public void displayDrinks(int idx) {
-		DrinkStoreController sctrl = mCtrl.getDrinksStoreController();
-		DrinksStoreItem item;
-		try {
-			item = (DrinksStoreItem) sctrl.getStoreItem(idx);
-			DrinksBrand db = (DrinksBrand) item.getContent();
-			mpanel.getDrinksDisplay().update(idx, item.getQuantity());
-			mpanel.displayPrice(db.getPrice());
-		} catch (VMCSException e) {
-			System.out.println("MaintenanceController.displayDrink:" + e);
-		}
-
-	}
-
-	/**
-	 * This method invoked by PriceDisplayListener.
-	 * @param pr the price of the drinks.
-	 */
-	public void setPrice(int pr) {
-		DrinkStoreController sctrl = mCtrl.getDrinksStoreController();
-		int curIdx = mpanel.getCurIdx();
-		sctrl.setPrice(curIdx, pr);
-		mpanel.getDrinksDisplay().getPriceDisplay().setValue(pr + "C");
-	}
-
-	/**
-	 * This method sends the total cash held in the CashStore to the MaintenancePanel&#46
-	 * This method is invoked by the TotalCashButtonListener.
-	 */
-	public void getTotalCash() {
-		CashStoreController sctrl = mCtrl.getCashStoreController();
-		int tc = sctrl.getTotalCash();
-		mpanel.displayTotalCash(tc);
-
-	}
-	
-	public void transferAll() {
-		this.mediator.controllerChanged(this, new MediatorNotification(NotificationType.TransferAll));
-	}
-
-	/**
-	 * This method is to facilitate the transfer of all cash in CashStore to the maintainer&#46
-	 * This method is invoked by the TransferCashButtonListener&#46
-	 * It get all the cash from store and set store cash 0.
-	 */
-	public void transferAll(int cc) {
-		try {
-			mpanel.displayCoins(cc);
-			// the cash qty current is displayed in the Maintenance panel needs to be update to be 0;
-			// not required.
-			mpanel.updateCurrentQtyDisplay(Store.CASH, 0);
-		} catch (VMCSException e) {
-			System.out.println("MaintenanceController.transferAll:" + e);
-		}
-	}
-
-	/**
-	 * This method is invoked by the StoreViewerListener.
-	 * @param type the type of the Store.
-	 * @param idx the index of the StoreItem.
-	 * @param qty the quantity of the StoreItem.
-	 */
-	public void changeStoreQty(char type, int idx, int qty) {
-		//StoreController sctrl = mCtrl.getStoreController();
-		try {
-			mpanel.updateQtyDisplay(type, idx, qty);
-			mpanel.initCollectCash();
-			mpanel.initTotalCash();
-		} catch (VMCSException e) {
-			System.out.println("MaintenanceController.changeStoreQty:" + e);
-		}
-	}
 	
 	public void logoutMaintainer() {
 		this.mediator.controllerChanged(this, new MediatorNotification(NotificationType.LogoutMaintainer));
@@ -249,15 +175,19 @@ public class MaintenanceController extends BaseController {
 		if (notification.getType() == NotificationType.LogoutMaintainer) {
 			this.logoutMaintainer((Boolean)notification.getObject()[0]);
 		} else if (notification.getType() == NotificationType.TransferAll) {
-			transferAll((Integer)notification.getObject()[0]);
+			//#if CashPayment
+//@			coinCtrl.transferAll((Integer)notification.getObject()[0]);
+			//#endif
 		} else if (notification.getType() == NotificationType.SetupMaintainer) {
 			displayMaintenancePanel();
 		}
 		return null;
 	}
 	
-	private void configureCommands() {
-		Dispatcher.getInstance().addCommand("getTotalCash", new GetTotalCashCommand(this));
-		Dispatcher.getInstance().addCommand("displayCoin", new DisplayCoinCommand(this));
-	}
+	//#if CashPayment
+//@	private void configureCommands() {
+//@		Dispatcher.getInstance().addCommand("getTotalCash", new GetTotalCashCommand(this.coinCtrl));
+//@		Dispatcher.getInstance().addCommand("displayCoin", new DisplayCoinCommand(this.coinCtrl));
+//@	}
+	//#endif
 }//End of class MaintenanceController

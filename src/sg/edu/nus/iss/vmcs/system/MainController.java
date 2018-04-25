@@ -14,8 +14,10 @@ import sg.edu.nus.iss.vmcs.MediatorImpl;
 import sg.edu.nus.iss.vmcs.customer.TransactionController;
 import sg.edu.nus.iss.vmcs.machinery.MachineryController;
 import sg.edu.nus.iss.vmcs.maintenance.MaintenanceController;
-import sg.edu.nus.iss.vmcs.store.CashStore;
-import sg.edu.nus.iss.vmcs.store.CashStoreController;
+//#if CashPayment
+//@import sg.edu.nus.iss.vmcs.store.CashStore;
+//@import sg.edu.nus.iss.vmcs.store.CashStoreController;
+//#endif
 import sg.edu.nus.iss.vmcs.store.DrinkStoreController;
 import sg.edu.nus.iss.vmcs.store.DrinksStore;
 import sg.edu.nus.iss.vmcs.util.VMCSException;
@@ -32,7 +34,9 @@ public class MainController {
 	private MaintenanceController maintenanceCtrl;
 	private TransactionController txCtrl;
 	private DrinkStoreController drinkStoreCtrl;
-	private CashStoreController  cashStoreCtrl;
+	//#if CashPayment
+//@	private CashStoreController  cashStoreCtrl;
+	//#endif
 	private ApplicationMediator mediator;
 
 	private String      propertyFile;
@@ -72,15 +76,19 @@ public class MainController {
 	public void initialize() throws VMCSException {
 		try {
 			Environment.initialize(propertyFile);
-			CashPropertyLoader cashLoader =
-				new CashPropertyLoader(Environment.getCashPropFile());
+			//#if CashPayment
+//@			CashPropertyLoader cashLoader =
+//@				new CashPropertyLoader(Environment.getCashPropFile());
+//@			cashLoader.initialize();
+			//#endif
 			DrinkPropertyLoader drinksLoader =
-				new DrinkPropertyLoader(Environment.getDrinkPropFile());
-			cashLoader.initialize();
+					new DrinkPropertyLoader(Environment.getDrinkPropFile());
 			drinksLoader.initialize();
 			mediator = new MediatorImpl();
-			this.cashStoreCtrl = new CashStoreController(new CashStore(), cashLoader, mediator);
-			this.cashStoreCtrl.initialize();
+			//#if CashPayment
+//@			this.cashStoreCtrl = new CashStoreController(new CashStore(), cashLoader, mediator);
+//@			this.cashStoreCtrl.initialize();
+			//#endif
 			this.drinkStoreCtrl = new DrinkStoreController(new DrinksStore(), drinksLoader, mediator);
 			this.drinkStoreCtrl.initialize();
 			simulatorCtrl = new SimulationController(this, mediator);
@@ -88,9 +96,6 @@ public class MainController {
 			machineryCtrl.initialize();
 			maintenanceCtrl = new MaintenanceController(this, mediator);
 			txCtrl=new TransactionController(this, mediator);
-			
-			
-			
 			
 		} catch (IOException e) {
 			throw new VMCSException(
@@ -127,13 +132,15 @@ public class MainController {
 		return this.drinkStoreCtrl;
 	}
 	
-	/**
-	 * This method returns the StoreController.
-	 * @return the StoreController.
-	 */
-	public CashStoreController getCashStoreController() {
-		return this.cashStoreCtrl;
-	}
+	//#if CashPayment
+//@	/**
+//@	 * This method returns the StoreController.
+//@	 * @return the StoreController.
+//@	 */
+//@	public CashStoreController getCashStoreController() {
+//@		return this.cashStoreCtrl;
+//@	}
+	//#endif
 
 	/**
 	 * This method returns the MachineryController&#46; 
@@ -168,7 +175,9 @@ public class MainController {
 	 */
 	public void closeDown() {
 		try {
-			this.cashStoreCtrl.closeDown();
+			//#if CashPayment
+//@			this.cashStoreCtrl.closeDown();
+			//#endif
 			this.drinkStoreCtrl.closeDown();
 		} catch (Exception e) {
 			System.out.println("Error closing down the stores: " + e);

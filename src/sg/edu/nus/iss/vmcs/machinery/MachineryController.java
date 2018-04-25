@@ -25,10 +25,10 @@ import sg.edu.nus.iss.vmcs.store.*;
 public class MachineryController extends BaseController {
 	/**This attribute reference to the MainController*/
 	public MainController mainCtrl;
-	/**This attribute reference to the StoreController*/
-	public DrinkStoreController drinkStoreCtrl;
-	public CashStoreController cashStoreCtrl;
-
+	//#if CashPayment
+//@	private MachineryCoinController coinCtrl;
+	//#endif
+	private MachineryDrinkController drinkCtrl;
 	private MachinerySimulatorPanel ml;
 	private Door door;
 
@@ -39,8 +39,10 @@ public class MachineryController extends BaseController {
 	public MachineryController(MainController mctrl, ApplicationMediator mediator) {
 		super(mediator);
 		this.mainCtrl = mctrl;
-		cashStoreCtrl = mctrl.getCashStoreController();
-		drinkStoreCtrl = mctrl.getDrinksStoreController();
+		//#if CashPayment
+//@		coinCtrl = new MachineryCoinController(mainCtrl.getCashStoreController());
+		//#endif
+		drinkCtrl = new MachineryDrinkController(mainCtrl.getDrinksStoreController());
 	}
 
 	/**
@@ -141,46 +143,7 @@ public class MachineryController extends BaseController {
 			return;
 		ml.setDoorState(door.isDoorClosed());
 	}
-
-	/**
-	 * This method update drink stock view&#46;
-	 * This method will get the stock values of drinks brands from the Drinks Store
-	 * and display them on the Machinery SimulatorPanel.
-	 * @throws VMCSException if fail to update drinks store display.
-	 */
-	public void displayDrinkStock() throws VMCSException {
-		if (ml == null)
-			return;
-		ml.getDrinksStoreDisplay().update();
-	}
-
-	/**
-	 * This method update coin stock view after transfer all cash&#46;
-	 * This method will get the stock values of coin denominations from the CashStore and
-	 * display them on the MachinerySimulatorPanel.
-	 * @throws VMCSException if fail to update cash store display.
-	 */
-	public void displayCoinStock() throws VMCSException {
-		if (ml == null)
-			return;
-		ml.getCashStoreDisplay().update();
-	}
-
-	/* ************************************************************
-	 * Interactions with the Store that need to update the display
-	 */
-
-	/**
-	 * This method will instruct the CashStore to store the Coin sent as input, and
-	 * update the display on the MachinerySimulatorPanel.
-	 * @throws VMCSException if fail to update cash store display.
-	 */
-	public void storeCoin(Coin c) throws VMCSException {
-		this.cashStoreCtrl.storeCoin(c);
-		if (ml != null)
-			ml.getCashStoreDisplay().update();
-	}
-
+	
 	/**
 	 * This method instructs the DrinksStore to dispense one drink, and then
 	 * updates the MachinerySimulatorPanel.&#46; It returns TRUE or FALSE to indicate
@@ -189,30 +152,16 @@ public class MachineryController extends BaseController {
 	 * @throws VMCSException if fail to update cash store display.
 	 */
 	public void dispenseDrink(int idx) throws VMCSException {
-		this.drinkStoreCtrl.dispenseDrink(idx);
-		if (ml != null)
-			ml.getCashStoreDisplay().update();
-
-	}
-
-	/**
-	 * This method instructs the CashStore to issue a number of coins of a specific
-	 * denomination, and hen updates the MachinerySimulatorPanel&#46; It returns 
-	 * TRUE or FALSE to indiate whether the change issue was successful.
-	 * @param idx the index of the cash store item.
-	 * @param numOfCoins the number of coins to change.
-	 * @throws VMCSException if fail to update cash store display.
-	 */
-	public void giveChange(int idx, int numOfCoins) throws VMCSException {
-		this.cashStoreCtrl.giveChange(idx, numOfCoins);
-		if (ml != null)
-			ml.getCashStoreDisplay().update();
+		this.drinkCtrl.dispenseDrink(idx);
+		//#if CashPayment
+//@		this.coinCtrl.displayCoinStock();
+		//#endif
 	}
 	
 	/**
 	 * This method refresh the MachinerySimulatorPanel.
 	 */
-	public void refreshMachineryDisplay(){
+	public void refreshMachineryDisplay() {
 		if(ml!=null){
 			ml.refresh();
 		}
@@ -228,11 +177,13 @@ public class MachineryController extends BaseController {
 		} else if (notification.getType() == NotificationType.LogoutMaintainer) {
 			return isDoorClosed();
 		} else if (notification.getType() == NotificationType.TransferAll) {
-			try {
-				displayCoinStock();
-			} catch (VMCSException e) {
-				System.out.println("transferAll:" + e);
-			}
+			//#if CashPayment
+//@			try {
+//@				coinCtrl.displayCoinStock();
+//@			} catch (VMCSException e) {
+//@				System.out.println("transferAll:" + e);
+//@			}
+			//#endif
 		} else if (notification.getType() == NotificationType.RefreshMachineryPanel) {
 			refreshMachineryDisplay();
 		} else if (notification.getType() == NotificationType.SetupMachinery) {
@@ -242,10 +193,12 @@ public class MachineryController extends BaseController {
 				displayMachineryPanel();
 
 				// display drink stock;
-				displayDrinkStock();
+				drinkCtrl.displayDrinkStock();
 
-				// display coin quantity;
-				displayCoinStock();
+				//#if CashPayment
+//@				// display coin quantity;
+//@				coinCtrl.displayCoinStock();
+				//#endif
 
 				displayDoorState();
 			} catch (VMCSException e) {

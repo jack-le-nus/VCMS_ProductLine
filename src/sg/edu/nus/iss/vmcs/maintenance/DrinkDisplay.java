@@ -30,7 +30,7 @@ public class DrinkDisplay extends ControlElement {
 	public final static String TITLE = "Quantity of Drinks Available";
 
 	private DrinkStoreController storeCtrl;
-	private MaintenanceController mCtrl;
+	private MaintenanceDrinkController mCtrl;
 	private ControlElement bi;
 	private ControlElement price;
 	private int curIdx; //current displayed item index;
@@ -39,9 +39,8 @@ public class DrinkDisplay extends ControlElement {
 	 * This constructor creates an instance of the DrinkDisplay object.
 	 * @param mctrl the MaintenanceController.
 	 */
-	public DrinkDisplay(MaintenanceController mctrl) {
+	public DrinkDisplay(MaintenanceDrinkController mctrl, DrinkStoreController storeCtrl) {
 		mCtrl = mctrl;
-		storeCtrl = mCtrl.getMainController().getDrinksStoreController();
 
 		this.setLayout(new BorderLayout());
 		int len;
@@ -52,14 +51,11 @@ public class DrinkDisplay extends ControlElement {
 		Director director = new Director(builder);
 		director.construct(TITLE, items, len);
 		bi = builder.getResult();
-
 		bi.addListener(new DrinkDisplayListener(mCtrl));
 		bi.clear();
+		
 		price = new LabelledDisplay("Brand Price", 4, LabelledDisplay.FLOW);
-
-		PriceDisplayListener pdl;
-
-		pdl = new PriceDisplayListener(mCtrl);
+		PriceDisplayListener pdl = new PriceDisplayListener(mCtrl);
 		price.addListener(pdl);
 		Panel tp = new Panel();
 		tp.setLayout(new FlowLayout(FlowLayout.CENTER));

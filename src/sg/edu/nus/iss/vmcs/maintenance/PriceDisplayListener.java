@@ -18,13 +18,13 @@ import java.awt.*;
  * @author Olivo Miotto, Pang Ping Li
  */
 public class PriceDisplayListener implements ActionListener {
-	private MaintenanceController mctrl;
+	private MaintenanceDrinkController mctrl;
 
 	/**
 	 * This constructor creates an instance of PriceDisplayListener object.
 	 * @param mc the MaintenanceController.
 	 */
-	public PriceDisplayListener(MaintenanceController mc) {
+	public PriceDisplayListener(MaintenanceDrinkController mc) {
 		mctrl = mc;
 	}
 	

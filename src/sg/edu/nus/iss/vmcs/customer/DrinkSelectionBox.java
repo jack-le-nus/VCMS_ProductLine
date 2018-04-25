@@ -74,7 +74,9 @@ public class DrinkSelectionBox extends Panel {
 		}
 		DrinkSelectionItem item=drinkSelectionItems[brand];
 		item.setQuantity(quantity);
-		item.setPrice(price);
+		//#if CashPayment
+//@		item.setPrice(price);
+		//#endif
 		item.setName(name);
 	}
 	

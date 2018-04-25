@@ -18,16 +18,14 @@ import sg.edu.nus.iss.vmcs.store.*;
 import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
 
 /**
- * This panel simulates the physical actions of the maintainer&#46;
- * It enables the user to:
- * <br>
- * 1- Display and enter new values for the number of cans of each DrinksBrand held by the
- * DrinksStore;
- * <br>
- * 2- Display and enter new values for the number of coins of each denomination held by
- * the CashStore;
- * <br>
- * 3- Display whether the vending machine Door is unlocked, and enable it to be locked.
+ * This panel simulates the physical actions of the maintainer&#46; It enables
+ * the user to: <br>
+ * 1- Display and enter new values for the number of cans of each DrinksBrand
+ * held by the DrinksStore; <br>
+ * 2- Display and enter new values for the number of coins of each denomination
+ * held by the CashStore; <br>
+ * 3- Display whether the vending machine Door is unlocked, and enable it to be
+ * locked.
  *
  * @version 3.0 5/07/2003
  * @author Olivo Miotto, Pang Ping Li
@@ -35,49 +33,37 @@ import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
 public class MachinerySimulatorPanel extends Dialog {
 	private static final String TITLE = "Machinery Panel";
 
-	private ControlElement cashDisplay;
-	private ControlElement drinksDisplay;
 	private Checkbox doorDisplay;
-	public DrinkStoreController drinkStoreCtrl;
-	public CashStoreController cashStoreCtrl;
+	private MachinerySimulatorDrinkPanel drinkPanel;
+	// #if CashPayment
+//@	private MachinerySimulatorCoinPanel coinPanel;
+	// #endif
 	private MachineryController machineryCtrl;
-	
-	/**This constant attribute holds the cash view title*/
-	public static final String CASH_VIEW_TITLE = "Quantity of Coins Available";
-	/**This constant attribute holds the drink view title*/
-	public static final String DRINK_VIEW_TITLE = "Quantity of Drinks Available";
 
 	/**
 	 * This constructor creates an instance of MachinerySimulatorPanel.
-	 * @param fr the parent frame.
-	 * @param machCtrl the MachineryController.
+	 * 
+	 * @param fr
+	 *            the parent frame.
+	 * @param machCtrl
+	 *            the MachineryController.
 	 */
 	public MachinerySimulatorPanel(Frame fr, MachineryController machCtrl) {
 		super(fr, TITLE, false);
 
 		machineryCtrl = machCtrl;
-		
-		cashStoreCtrl = machineryCtrl.getMainController().getCashStoreController();
-		drinkStoreCtrl = machineryCtrl.getMainController().getDrinksStoreController();
 
 		Label lb = new Label(TITLE);
 		lb.setFont(new Font("Helvetica", Font.BOLD, 24));
 		lb.setAlignment(Label.CENTER);
-		
-		StoreViewerBuilder builder = new StoreViewerBuilder(cashStoreCtrl);
-		Director director = new Director(builder);
-		director.construct(CASH_VIEW_TITLE, cashStoreCtrl.getStoreItems(), cashStoreCtrl.getStoreSize());
-		cashDisplay = builder.getResult();
-		
-		builder = new StoreViewerBuilder(drinkStoreCtrl);
-		director = new Director(builder);
-		director.construct(DRINK_VIEW_TITLE, drinkStoreCtrl.getStoreItems(), drinkStoreCtrl.getStoreSize());
-		drinksDisplay = builder.getResult();
 
 		Panel tp = new Panel();
 		tp.setLayout(new GridLayout(0, 1));
-		tp.add(cashDisplay);
-		tp.add(drinksDisplay);
+		
+		// #if CashPayment
+//@		coinPanel.initializeCashDisplay(tp);
+		// #endif
+		drinkPanel.initializeDrinkDisplay(tp);
 
 		Panel dp = new Panel();
 		doorDisplay = new Checkbox();
@@ -100,13 +86,10 @@ public class MachinerySimulatorPanel extends Dialog {
 
 	/**
 	 * Display the MachinerySimulatorPanel&#46; This will achieved by displaying
-	 * the frame of the panel and then sending messages to its constituent objects
-	 * instructing them to:
-	 * <br>
-	 * 1- Display themselves;
-	 * <br>
-	 * 2- Set initial values;
-	 * <br>
+	 * the frame of the panel and then sending messages to its constituent
+	 * objects instructing them to: <br>
+	 * 1- Display themselves; <br>
+	 * 2- Set initial values; <br>
 	 * 3- Deactivate themselves.
 	 */
 	public void display() {
@@ -121,46 +104,39 @@ public class MachinerySimulatorPanel extends Dialog {
 	}
 
 	/**
-	 * This method returns the CashDisplay:StoreViewer.
-	 * @return the CashDisplay:StoreViewer.
-	 */
-	public ControlElement getCashStoreDisplay() {
-		return cashDisplay;
-	}
-
-	/**
-	 * This method returns the DrinksDisplay:StoreViewer.
-	 * @return the DrinksDisplay:StoreViewer.
-	 */
-	public ControlElement getDrinksStoreDisplay() {
-		return drinksDisplay;
-	}
-
-	/**
 	 * This method set the door state to Open or Closed.
-	 * @param state TRUE to set the door state to open, otherwise, set the door state to close.
+	 * 
+	 * @param state
+	 *            TRUE to set the door state to open, otherwise, set the door
+	 *            state to close.
 	 */
 	public void setDoorState(boolean state) {
 		doorDisplay.setState(state);
 		this.setActive(!state);
-
 	}
 
 	/**
 	 * This method refreshes the cash display and drinks display.
 	 */
-	public void refresh(){
-		cashDisplay.update();
-		drinksDisplay.update();
+	public void refresh() {
+		// #if CashPayment
+//@		coinPanel.refresh();
+		// #endif
+		drinkPanel.refresh();
 	}
-	
+
 	/**
-	 * THis method activates or deactivates the MachinerySimulatorPanel and its component objects.
-	 * @param state TRUE to activate, FALSE to deactivate.
+	 * THis method activates or deactivates the MachinerySimulatorPanel and its
+	 * component objects.
+	 * 
+	 * @param state
+	 *            TRUE to activate, FALSE to deactivate.
 	 */
 	public void setActive(boolean state) {
-		cashDisplay.setActive(state);
-		drinksDisplay.setActive(state);
+		// #if CashPayment
+//@		coinPanel.setActive(state);
+		// #endif
+		drinkPanel.setActive(state);
 		doorDisplay.setEnabled(state);
 	}
-}//End of class MachinerySimulatorPanel
+}// End of class MachinerySimulatorPanel

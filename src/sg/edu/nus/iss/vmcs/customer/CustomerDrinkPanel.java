@@ -11,8 +11,13 @@ import sg.edu.nus.iss.vmcs.util.LabelledValue;
 public class CustomerDrinkPanel {
 	private DrinkSelectionBox drinkSelectionBox;
 	private LabelledValue lbdCollectCan=new LabelledValue("Collect Can Here:","",100);
+	private TransactionController txCtrl;
 	
-	public void initializeDrink(Panel pan0, TransactionController txCtrl) {
+	public CustomerDrinkPanel(TransactionController txCtrl) {
+		this.txCtrl = txCtrl;
+	}
+	
+	public void initializeDrink(Panel pan0) {
 		drinkSelectionBox=new DrinkSelectionBox(txCtrl.getMainController().getDrinksStoreController(), txCtrl);
 		drinkSelectionBox.setActive(true);
 		

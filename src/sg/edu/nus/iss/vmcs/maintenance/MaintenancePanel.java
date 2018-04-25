@@ -65,15 +65,25 @@ public class MaintenancePanel extends Dialog {
 
 	private static final String TITLE = "Maintenance Panel";
 	private LabelledDisplay password;
-	private LabelledDisplay collectCash;
 	private Button exitBtn;
-	private CoinDisplay cDisplay; // need to be access from other class.
-	private DrinkDisplay dDisplay; // need to be access from other class.
-	private ButtonItem totalCash;
-	private Button transferCash;
+	//#if CashPayment
+//@	private MaintenanceCoinPanel coinPanel;
+	//#endif
+	private MaintenanceDrinkPanel drinkPanel;
+	
 	private WarningDisplay validPswd;
 	private WarningDisplay invalidPswd;
 	private MaintenanceController mctrl;
+	
+	//#if CashPayment
+//@	public void setMaintenanceCoinPanel(MaintenanceCoinPanel coinPanel) {
+//@		this.coinPanel = coinPanel;
+//@	}
+	//#endif
+	
+	public void setMaintenanceDrinkPanel(MaintenanceDrinkPanel drinkPanel){
+		this.drinkPanel = drinkPanel;
+	}
 
 	/**
 	 * This constructor creates an instance of MaintenancePanel object.
@@ -85,20 +95,24 @@ public class MaintenancePanel extends Dialog {
 	 */
 	public MaintenancePanel(Frame fr, MaintenanceController mc) {
 		super(fr, TITLE, false);
-
 		mctrl = mc;
+	}
 
+	public void initialize() {
 		// north part
 		Label lb = new Label(TITLE);
 		lb.setFont(new Font("Helvetica", Font.BOLD, 24));
 		Panel tp1 = new Panel();
 		tp1.add(lb);
 
+		Panel pp = new Panel();
+		pp.setLayout(new GridLayout(1, 2));
+		
 		Panel tpn = new Panel();
 		tpn.setLayout(new GridLayout(0, 1));
 
 		password = new LabelledDisplay("Password:", 30, LabelledDisplay.FLOW);
-		PasswordListener pl = new PasswordListener(mc.getAccessManager());
+		PasswordListener pl = new PasswordListener(mctrl.getAccessManager());
 		password.addListener(pl);
 
 		Panel tp3 = new Panel();
@@ -113,39 +127,21 @@ public class MaintenancePanel extends Dialog {
 		// center part
 		Panel tpc = new Panel();
 		tpc.setLayout(new GridLayout(0, 1));
-
-		cDisplay = new CoinDisplay(mctrl);
-		dDisplay = new DrinkDisplay(mctrl);
-
+		
 		Panel tp5 = new Panel();
 		tp5.setLayout(new GridLayout(0, 1));
 
-		totalCash = new ButtonItem("Show Total Cash Held", 5, ButtonItem.FLOW);
-		TotalCashButtonListener tl;
-
-		tl = new TotalCashButtonListener();
-		totalCash.addListener(tl);
-
-		transferCash = new Button("Press to Collect All Cash");
-		transferCash.addActionListener(new TransferCashButtonListener(mc));
-
-		Panel tp6 = new Panel();
-		tp6.setLayout(new FlowLayout());
-		tp6.add(transferCash);
-
-		collectCash = new LabelledDisplay("Collect Cash:", 5, LabelledDisplay.FLOW);
+		//#if CashPayment
+//@		coinPanel.initialize(tp5, pp);
+		//#endif
+		drinkPanel.initialize(pp);
+		
 		exitBtn = new Button("Press Here when Finished");
 		exitBtn.addActionListener(new ExitButtonListener(mctrl));
-
-		tp5.add(totalCash);
-		tp5.add(tp6);
-		tp5.add(collectCash);
 		tp5.add(exitBtn);
 		tpc.setLayout(new BorderLayout());
-		Panel pp = new Panel();
-		pp.setLayout(new GridLayout(1, 2));
-		pp.add(cDisplay);
-		pp.add(dDisplay);
+		
+		
 		tpc.add("Center", pp);
 		tpc.add("South", tp5);
 
@@ -180,25 +176,6 @@ public class MaintenancePanel extends Dialog {
 	 */
 	public void closeDown() {
 		dispose();
-
-	}
-
-	/**
-	 * This method returns the CoinDisplay.
-	 * 
-	 * @return the CoinDisplay.
-	 */
-	public CoinDisplay getCoinDisplay() {
-		return cDisplay;
-	}
-
-	/**
-	 * This method returns the DrinksDisplay.
-	 * 
-	 * @return the DrinksDisplay.
-	 */
-	public DrinkDisplay getDrinksDisplay() {
-		return dDisplay;
 	}
 
 	/**
@@ -217,7 +194,6 @@ public class MaintenancePanel extends Dialog {
 			validPswd.setState(false);
 			invalidPswd.setState(true);
 		}
-
 	}
 
 	/**
@@ -238,11 +214,10 @@ public class MaintenancePanel extends Dialog {
 			invalidPswd.setState(false);
 			break;
 		case WORKING:
-			collectCash.setActive(st);
-			cDisplay.setActive(st);
-			dDisplay.setActive(st);
-			totalCash.setActive(st);
-			transferCash.setEnabled(st);
+			drinkPanel.setActive(st);
+			//#if CashPayment
+//@			coinPanel.setActive(st);
+			//#endif
 			break;
 		case PSWD:
 			password.setActive(st);
@@ -250,99 +225,11 @@ public class MaintenancePanel extends Dialog {
 		}
 	}
 
-	/**
-	 * This method returns the current drinks index.
-	 * 
-	 * @return the current drinks index.
-	 */
-	public int getCurIdx() {
-		return dDisplay.getCurIdx();
-	}
-
-	/**
-	 * This method displays the received value as the total cash held in the
-	 * CashStore of the vending machine.
-	 * 
-	 * @param tc
-	 *            the total cash.
-	 */
-	public void displayTotalCash(int tc) {
-		String stc;
-
-		stc = new String(tc + " C");
-		totalCash.setValue(stc);
-	}
-
-	/**
-	 * This method displays the amount of money to be issued on the Cash
-	 * Collection Tray Display.
-	 * 
-	 * @param cc
-	 *            the collected cash.
-	 */
-	public void displayCoins(int cc) {
-		collectCash.setValue(cc);
-	}
-
-	/**
-	 * Use when machinery simulator panel changes qty; It is used to
-	 * automatically update the displayed quantity in maintenance panel&#46; It
-	 * is called by Maintenance Controller&#46; Not required in requirement&#46;
-	 * 
-	 * @throws VMCSException
-	 *             if fail to update quantity display.
-	 */
-	public void updateQtyDisplay(int type, int idx, int qty) throws VMCSException {
-		if (type == Store.CASH) {
-			cDisplay.update(idx, qty);
-		} else
-			dDisplay.update(idx, qty);
-	}
-
-	/**
-	 * When transfer all button is pushed, the current display needs to be
-	 * updated&#46; not required in requirement&#46;
-	 * 
-	 * @throws VMCSException
-	 *             if fail to update quantity display.
-	 */
-	public void updateCurrentQtyDisplay(int type, int qty) throws VMCSException {
-		int curIdx;
-		if (type == Store.CASH)
-			curIdx = cDisplay.getCurIdx();
-		else
-			curIdx = dDisplay.getCurIdx();
-		updateQtyDisplay(type, curIdx, qty);
-	}
-
-	/**
-	 * This method initiate the collect cash.
-	 */
-	public void initCollectCash() {
-		collectCash.setValue("");
-	}
-
-	/**
-	 * This method initiate the total cash.
-	 */
-	public void initTotalCash() {
-		totalCash.setValue("");
-	}
 
 	/**
 	 * This method clear the password field.
 	 */
 	public void clearPassword() {
 		password.setValue("");
-	}
-
-	/**
-	 * This method display the price for the DrinkDisplay.
-	 * 
-	 * @param price
-	 *            the price of the Drinks.
-	 */
-	public void displayPrice(int price) {
-		dDisplay.getPriceDisplay().setValue(price + "C");
 	}
 }// End of class MaintenancePanel
