@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.vmcs.store;
+package sg.edu.nus.iss.vcms.variability;
 
 import junit.framework.TestCase;
 
@@ -6,10 +6,17 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import sg.edu.nus.iss.vmcs.Vmcs;
+import sg.edu.nus.iss.vmcs.store.CashStore;
+import sg.edu.nus.iss.vmcs.store.CashStoreItem;
+import sg.edu.nus.iss.vmcs.store.Coin;
+import sg.edu.nus.iss.vmcs.store.StoreController;
+import sg.edu.nus.iss.vmcs.store.StoreItem;
+import sg.edu.nus.iss.vmcs.store.StoreObject;
 import sg.edu.nus.iss.vmcs.system.MainController;
 
 public class CashStoreTest extends TestCase{
-	private String propertyFilename=System.getProperty("propertyFilename");
+	private String propertyFilename=Vmcs.getPropertiesFile();
 	
 	@Before
 	public void setup() throws Exception{	

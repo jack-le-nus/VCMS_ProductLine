@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.vmcs.store;
+package sg.edu.nus.iss.vmcs.commonality;
 
 import junit.framework.TestCase;
 
@@ -6,10 +6,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import sg.edu.nus.iss.vmcs.Vmcs;
+import sg.edu.nus.iss.vmcs.store.DrinksBrand;
+import sg.edu.nus.iss.vmcs.store.Store;
+import sg.edu.nus.iss.vmcs.store.StoreController;
+import sg.edu.nus.iss.vmcs.store.StoreItem;
+import sg.edu.nus.iss.vmcs.store.StoreObject;
 import sg.edu.nus.iss.vmcs.system.MainController;
 
 public class StoreItemTest extends TestCase{
-	private String propertyFilename=System.getProperty("propertyFilename");
+	private String propertyFilename=Vmcs.getPropertiesFile();
 	
 	@Before
 	public void setup() throws Exception{
@@ -35,26 +41,10 @@ public class StoreItemTest extends TestCase{
 	public void testSetGetContent() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getCashStoreController();
+		StoreController storeController=mainCtrl.getDrinksStoreController();
 		storeController.initialize();
 		Store store=(Store)storeController.getStore();
 		int storeSize=store.getStoreSize();
-		for(int i=0;i<storeSize;i++){
-			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
-			Coin coin1=new Coin();
-			//Act setContent
-			storeItem.setContent(coin1);
-			//Act getContent
-			Coin coin2=(Coin)storeItem.getContent();
-			//Assert
-			assertNotNull(coin2);
-			assertSame(coin1,coin2);
-		}
-		
-		storeController=mainCtrl.getDrinksStoreController();
-		storeController.initialize();
-		store=(Store)storeController.getStore();
-		storeSize=store.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
 			DrinksBrand drinksBrand1=new DrinksBrand("A",65);
@@ -72,27 +62,11 @@ public class StoreItemTest extends TestCase{
 	public void testSetGetQuantity() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getCashStoreController();
+		
+		StoreController storeController=mainCtrl.getDrinksStoreController();
 		storeController.initialize();
 		Store store=(Store)storeController.getStore();
 		int storeSize=store.getStoreSize();
-		for(int i=0;i<storeSize;i++){
-			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
-			Coin coin1=new Coin();
-			storeItem.setContent(coin1);
-			int qty1=12;
-			//Act setQuantity
-			storeItem.setQuantity(qty1);
-			//Act getQuantity
-			int qty2=storeItem.getQuantity();
-			//Assert
-			assertSame(qty1,qty2);
-		}
-		
-		storeController=mainCtrl.getDrinksStoreController();
-		storeController.initialize();
-		store=(Store)storeController.getStore();
-		storeSize=store.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
 			DrinksBrand drinksBrand1=new DrinksBrand("A",65);
@@ -111,25 +85,11 @@ public class StoreItemTest extends TestCase{
 	public void testStore() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getCashStoreController();
+		
+		StoreController storeController=mainCtrl.getDrinksStoreController();
 		storeController.initialize();
 		Store store=(Store)storeController.getStore();
 		int storeSize=store.getStoreSize();
-		for(int i=0;i<storeSize;i++){
-			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
-			Coin coin1=(Coin)storeItem.getContent();
-			//Act store
-			storeItem.store();
-			Coin coin2=(Coin)storeItem.getContent();
-			//Assert
-			assertNotNull(coin2);
-			assertSame(coin1,coin2);
-		}
-		
-		storeController=mainCtrl.getDrinksStoreController();
-		storeController.initialize();
-		store=(Store)storeController.getStore();
-		storeSize=store.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
 			DrinksBrand drinksBrand1=(DrinksBrand)storeItem.getContent();
@@ -146,28 +106,11 @@ public class StoreItemTest extends TestCase{
 	public void testDecrement() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getCashStoreController();
+		
+		StoreController storeController=mainCtrl.getDrinksStoreController();
 		storeController.initialize();
 		Store store=(Store)storeController.getStore();
 		int storeSize=store.getStoreSize();
-		for(int i=0;i<storeSize;i++){
-			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
-			int qty1=storeItem.getQuantity();
-			//Act decrement
-			storeItem.decrement();
-			int qty2=storeItem.getQuantity();
-			//In the case new quantity is negative, it will be set to 0
-			//Therefore, qty1=0 may be equals to qty2=0
-			//Assert
-			if(!(qty1>=qty2)){
-				fail();
-			}
-		}
-		
-		storeController=mainCtrl.getDrinksStoreController();
-		storeController.initialize();
-		store=(Store)storeController.getStore();
-		storeSize=store.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
 			int qty1=storeItem.getQuantity();
@@ -187,24 +130,10 @@ public class StoreItemTest extends TestCase{
 	public void testIncrement() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getCashStoreController();
+		StoreController storeController=mainCtrl.getDrinksStoreController();
 		storeController.initialize();
 		Store store=(Store)storeController.getStore();
 		int storeSize=store.getStoreSize();
-		for(int i=0;i<storeSize;i++){
-			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
-			int qty1=storeItem.getQuantity();
-			//Act increment
-			storeItem.increment();
-			int qty2=storeItem.getQuantity();
-			//Assert
-			assertEquals(qty1,qty2-1);
-		}
-		
-		storeController=mainCtrl.getDrinksStoreController();
-		storeController.initialize();
-		store=(Store)storeController.getStore();
-		storeSize=store.getStoreSize();
 		for(int i=0;i<storeSize;i++){
 			StoreItem storeItem=(StoreItem)store.getStoreItem(i);
 			int qty1=storeItem.getQuantity();

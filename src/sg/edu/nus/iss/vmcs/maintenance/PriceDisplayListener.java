@@ -1,4 +1,6 @@
+//#if CashPayment
 /*
+
  * Copyright 2003 ISS.
  * The contents contained in this document may not be reproduced in any
  * form or by any means, without the written permission of ISS, other
@@ -45,3 +47,4 @@ public class PriceDisplayListener implements ActionListener {
 		mctrl.setPrice(ip);
 	}
 }//End of class PriceDisplayListener
+//#endif

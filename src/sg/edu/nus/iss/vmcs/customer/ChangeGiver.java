@@ -69,7 +69,7 @@ public class ChangeGiver {
 					quantityRequired++;
 					quantity--;
 				}
-				trCtrl.getMainController().getMachineryController().giveChange(i,quantityRequired);
+				trCtrl.getMainController().getMachineryController().getCoinController().giveChange(i,quantityRequired);
 			}
 			coinCtrl.getCustomerCoinPanel().setChange(changeRequired-changeBal);
 			if(changeBal>0)

@@ -40,6 +40,7 @@ public class MaintenanceDrinkController {
 
 	}
 
+	//#if CashPayment
 	/**
 	 * This method invoked by PriceDisplayListener.
 	 * @param pr the price of the drinks.
@@ -49,4 +50,5 @@ public class MaintenanceDrinkController {
 		drinkCtrl.setPrice(curIdx, pr);
 		mpanel.getDrinksDisplay().getPriceDisplay().setValue(pr + "C");
 	}
+	//#endif
 }

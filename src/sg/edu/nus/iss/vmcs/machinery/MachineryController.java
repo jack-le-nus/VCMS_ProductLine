@@ -13,8 +13,8 @@ import sg.edu.nus.iss.vmcs.ApplicationMediator;
 import sg.edu.nus.iss.vmcs.BaseController;
 import sg.edu.nus.iss.vmcs.MediatorNotification;
 import sg.edu.nus.iss.vmcs.NotificationType;
+import sg.edu.nus.iss.vmcs.commonality.*;
 import sg.edu.nus.iss.vmcs.customer.CustomerPanel;
-import sg.edu.nus.iss.vmcs.store.*;
 
 /**
  * This object controls the Change State use case.
@@ -52,6 +52,12 @@ public class MachineryController extends BaseController {
 	public MainController getMainController() {
 		return mainCtrl;
 	}
+	
+	//#if CashPayment
+	public MachineryCoinController getCoinController() {
+		return coinCtrl;
+	}
+	//#endif
 
 	/**
 	 * This method creates the Door.
@@ -78,8 +84,14 @@ public class MachineryController extends BaseController {
 	 */
 	public void displayMachineryPanel() {
 		SimulatorControlPanel scp = mainCtrl.getSimulatorControlPanel();
-		if (ml == null)
+		if (ml == null) {
 			ml = new MachinerySimulatorPanel(scp, this);
+			this.drinkCtrl.setup(ml);
+			//#if CashPayment
+			this.coinCtrl.setup(ml);
+			//#endif
+			ml.initialize();
+		}
 		ml.display();
 		MediatorNotification notification = new MediatorNotification(NotificationType.SetActiveSimulatorPanel);
 		notification.setObject(SimulatorControlPanel.ACT_MACHINERY, false);

@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.vmcs.store;
+package sg.edu.nus.iss.vmcs.commonality;
 
 import junit.framework.TestCase;
 
@@ -6,10 +6,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import sg.edu.nus.iss.vmcs.Vmcs;
+import sg.edu.nus.iss.vmcs.store.DrinksBrand;
+import sg.edu.nus.iss.vmcs.store.DrinksStore;
+import sg.edu.nus.iss.vmcs.store.DrinksStoreItem;
+import sg.edu.nus.iss.vmcs.store.StoreController;
+import sg.edu.nus.iss.vmcs.store.StoreObject;
 import sg.edu.nus.iss.vmcs.system.MainController;
 
 public class DrinksStoreItemTest extends TestCase{
-	private String propertyFilename="/Users/jackle/Documents/Materials/Design Patterns/Assignments/Github/DesignPattern.VCMS/vmcs.properties";
+	private String propertyFilename=Vmcs.getPropertiesFile();
 	
 	@Before
 	public void setup() throws Exception{

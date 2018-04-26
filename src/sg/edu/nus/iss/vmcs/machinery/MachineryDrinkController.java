@@ -10,7 +10,11 @@ public class MachineryDrinkController {
 
 	public MachineryDrinkController(DrinkStoreController drinkStoreCtrl) {
 		this.drinkStoreCtrl = drinkStoreCtrl;
-		
+	}
+	
+	public void setup(MachinerySimulatorPanel panel){
+		ml = new MachinerySimulatorDrinkPanel(drinkStoreCtrl);
+		panel.setMachinerySimulatorDrinkPanel(ml);
 	}
 	
 	public void dispenseDrink(int idx) throws VMCSException {

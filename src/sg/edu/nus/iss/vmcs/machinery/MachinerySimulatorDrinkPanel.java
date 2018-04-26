@@ -13,6 +13,10 @@ public class MachinerySimulatorDrinkPanel {
 	private ControlElement drinksDisplay;
 	private DrinkStoreController drinkStoreCtrl;
 	
+	public MachinerySimulatorDrinkPanel(DrinkStoreController drinkStoreCtrl) {
+		this.drinkStoreCtrl = drinkStoreCtrl;
+	}
+	
 	public void initializeDrinkDisplay(Panel tp) {
 		StoreViewerBuilder builder;
 		Director director;

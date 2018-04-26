@@ -20,7 +20,7 @@ import sg.edu.nus.iss.vmcs.util.*;
  */
 
 public class Vmcs {
-	private String propertiesFile;
+	private static String propertiesFile = "/Users/jackle/Documents/Semester 3/Software Product Line/Assignments/Project/vmcs.properties";
 
 	/**
 	 * This constructor creates an instance of Vmcs object.
@@ -48,11 +48,13 @@ public class Vmcs {
 	 * @param args the arguments for the main application.
 	 */
 	public static void main(String args[]) {
-		
-		String propertyFile ="vmcs.properties";
 		//Vmcs vmcs = new Vmcs(args[0]);
 		// passing file directly instead of runtime arguments
-		Vmcs vmcs = new Vmcs(propertyFile);
+		Vmcs vmcs = new Vmcs(propertiesFile);
 		vmcs.start();
+	}
+	
+	public static String getPropertiesFile() {
+		return propertiesFile;
 	}
 }//End of class Vmcs

@@ -46,9 +46,6 @@ public class MainController {
 	 * @param propertyFile the property file name.
 	 */
 	public MainController(String propertyFile) {
-		if(propertyFile == null) {
-			propertyFile = "/Users/jackle/Documents/Materials/Design Patterns/Assignments/Github/DesignPattern.VCMS/vmcs.properties";
-		}
 		this.propertyFile = propertyFile;
 		
 	}

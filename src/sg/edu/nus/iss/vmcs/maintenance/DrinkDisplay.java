@@ -13,8 +13,10 @@ import java.awt.event.ActionListener;
 import sg.edu.nus.iss.vmcs.Builder;
 import sg.edu.nus.iss.vmcs.ButtonItemDisplayBuilder;
 import sg.edu.nus.iss.vmcs.Director;
+import sg.edu.nus.iss.vmcs.commonality.*;
+import sg.edu.nus.iss.vmcs.store.DrinkStoreController;
+import sg.edu.nus.iss.vmcs.store.StoreItem;
 import sg.edu.nus.iss.vmcs.ControlElement;
-import sg.edu.nus.iss.vmcs.store.*;
 import sg.edu.nus.iss.vmcs.util.*;
 
 /**
@@ -32,7 +34,9 @@ public class DrinkDisplay extends ControlElement {
 	private DrinkStoreController storeCtrl;
 	private MaintenanceDrinkController mCtrl;
 	private ControlElement bi;
+	//#if CashPayment
 	private ControlElement price;
+	//#endif
 	private int curIdx; //current displayed item index;
 
 	/**
@@ -54,18 +58,23 @@ public class DrinkDisplay extends ControlElement {
 		bi.addListener(new DrinkDisplayListener(mCtrl));
 		bi.clear();
 		
+		//#if CashPayment
 		price = new LabelledDisplay("Brand Price", 4, LabelledDisplay.FLOW);
 		PriceDisplayListener pdl = new PriceDisplayListener(mCtrl);
 		price.addListener(pdl);
+		//#endif
 		Panel tp = new Panel();
 		tp.setLayout(new FlowLayout(FlowLayout.CENTER));
 		tp.add(bi);
 		curIdx = 0;
 		this.add("Center", tp);
+		//#if CashPayment
 		this.add("South", (Panel)price);
 		price.setActive(false);
+		//#endif
 	}
 
+	//#if CashPayment
 	/**
 	 * This method returns the LabelledDisplay of the price.
 	 * @return LabelledDisplay of the price.
@@ -73,13 +82,16 @@ public class DrinkDisplay extends ControlElement {
 	public ControlElement getPriceDisplay() {
 		return price;
 	}
+	//#endif
 
 	/**
 	 * This method set the active status of the LabelledDisplay and ButtonItemDisplay.
 	 * @param st the active status of the LabelledDisplay and ButtonItemDisplay.
 	 */
 	public void setActive(boolean st) {
+		//#if CashPayment
 		price.setActive(st);
+		//#endif
 		bi.setActive(st);
 	}
 
@@ -93,7 +105,9 @@ public class DrinkDisplay extends ControlElement {
 	public void update(int idx, int qty) throws VMCSException {
 		curIdx = idx;
 		bi.clear();
+		//#if CashPayment
 		price.setActive(true);
+		//#endif
 		bi.update(idx, qty);
 	}
 

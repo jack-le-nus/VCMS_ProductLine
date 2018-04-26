@@ -15,6 +15,11 @@ public class MachineryCoinController {
 		this.cashStoreCtrl = cashStoreCtrl;
 	}
 	
+	public void setup(MachinerySimulatorPanel panel){
+		ml = new MachinerySimulatorCoinPanel(cashStoreCtrl);
+		panel.setMachinerySimulatorCoinPanel(ml);
+	}
+	
 	/**
 	 * This method update coin stock view after transfer all cash&#46;
 	 * This method will get the stock values of coin denominations from the CashStore and

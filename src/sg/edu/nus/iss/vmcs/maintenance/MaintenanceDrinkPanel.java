@@ -57,6 +57,7 @@ public class MaintenanceDrinkPanel {
 		updateQtyDisplay(curIdx, qty);
 	}
 	
+	//#if CashPayment
 	/**
 	 * This method display the price for the DrinkDisplay.
 	 * 
@@ -66,6 +67,7 @@ public class MaintenanceDrinkPanel {
 	public void displayPrice(int price) {
 		dDisplay.getPriceDisplay().setValue(price + "C");
 	}
+	//#endif
 
 	/**
 	 * This method returns the current drinks index.

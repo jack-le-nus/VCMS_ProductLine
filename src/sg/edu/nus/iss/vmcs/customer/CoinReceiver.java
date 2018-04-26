@@ -114,7 +114,7 @@ public class CoinReceiver {
 		try{
 			for(int i=0;i<arlCoins.size();i++){
 				Coin coin=(Coin)arlCoins.get(i);
-				machineryCtrl.storeCoin(coin);
+				machineryCtrl.getCoinController().storeCoin(coin);
 			}
 			resetReceived();
 			coinCtrl.getCustomerCoinPanel().setTotalMoneyInserted(0);

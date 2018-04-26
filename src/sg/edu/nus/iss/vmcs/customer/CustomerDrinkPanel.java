@@ -48,8 +48,6 @@ public class CustomerDrinkPanel {
 		return drinkSelectionBox;
 	}
 	
-
-	
 	/**
 	 * This method sets the can name to the collect tray.
 	 * @param name the name of the can.

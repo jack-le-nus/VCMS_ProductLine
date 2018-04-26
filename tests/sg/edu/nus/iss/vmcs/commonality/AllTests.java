@@ -1,6 +1,9 @@
-package sg.edu.nus.iss.vmcs.store;
+package sg.edu.nus.iss.vmcs.commonality;
 
 import junit.framework.TestSuite;
+import sg.edu.nus.iss.vcms.variability.CashStoreItemTest;
+import sg.edu.nus.iss.vcms.variability.CashStoreTest;
+import sg.edu.nus.iss.vcms.variability.CoinTest;
 
 /**
  * This objectives of the JUnit testing is to perform isolation unit testing.
@@ -14,9 +17,6 @@ import junit.framework.TestSuite;
 public class AllTests {
 	public static TestSuite suite() throws Exception {
 		  TestSuite suite=new TestSuite("Store Tests");
-		  suite.addTestSuite(CashStoreItemTest.class);
-		  suite.addTestSuite(CashStoreTest.class);
-		  suite.addTestSuite(CoinTest.class);
 		  suite.addTestSuite(DrinksBrandTest.class);
 		  suite.addTestSuite(DrinksStoreItemTest.class);
 		  suite.addTestSuite(DrinksStoreTest.class);

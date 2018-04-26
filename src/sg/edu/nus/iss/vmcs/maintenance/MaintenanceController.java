@@ -38,10 +38,8 @@ public class MaintenanceController extends BaseController {
 	private MainController mCtrl;
 	private MaintenancePanel mpanel;
 	//#if CashPayment
-	private MaintenanceCoinPanel coinPanel;
 	private MaintenanceCoinController coinCtrl;
 	//#endif
-	private MaintenanceDrinkPanel drinkPanel;
 	private MaintenanceDrinkController drinkCtrl;
 	private AccessManager am;
 

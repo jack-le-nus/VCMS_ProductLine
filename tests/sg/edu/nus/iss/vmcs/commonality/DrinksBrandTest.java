@@ -1,6 +1,7 @@
-package sg.edu.nus.iss.vmcs.store;
+package sg.edu.nus.iss.vmcs.commonality;
 
 import junit.framework.TestCase;
+import sg.edu.nus.iss.vmcs.store.DrinksBrand;
 
 import org.junit.After;
 import org.junit.Before;

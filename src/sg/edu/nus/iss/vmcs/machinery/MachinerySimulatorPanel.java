@@ -14,7 +14,7 @@ import sg.edu.nus.iss.vmcs.Builder;
 import sg.edu.nus.iss.vmcs.Director;
 import sg.edu.nus.iss.vmcs.ControlElement;
 import sg.edu.nus.iss.vmcs.StoreViewerBuilder;
-import sg.edu.nus.iss.vmcs.store.*;
+import sg.edu.nus.iss.vmcs.commonality.*;
 import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
 
 /**
@@ -52,7 +52,9 @@ public class MachinerySimulatorPanel extends Dialog {
 		super(fr, TITLE, false);
 
 		machineryCtrl = machCtrl;
+	}
 
+	public void initialize() {
 		Label lb = new Label(TITLE);
 		lb.setFont(new Font("Helvetica", Font.BOLD, 24));
 		lb.setAlignment(Label.CENTER);
@@ -139,4 +141,14 @@ public class MachinerySimulatorPanel extends Dialog {
 		drinkPanel.setActive(state);
 		doorDisplay.setEnabled(state);
 	}
+	
+	public void setMachinerySimulatorDrinkPanel(MachinerySimulatorDrinkPanel drinkPanel) {
+		this.drinkPanel = drinkPanel;
+	}
+	
+	//#if CashPayment
+	public void setMachinerySimulatorCoinPanel(MachinerySimulatorCoinPanel coinPanel) {
+		this.coinPanel = coinPanel;
+	}
+	//#endif
 }// End of class MachinerySimulatorPanel

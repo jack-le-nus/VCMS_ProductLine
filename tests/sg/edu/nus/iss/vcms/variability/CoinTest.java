@@ -1,10 +1,11 @@
-package sg.edu.nus.iss.vmcs.store;
+package sg.edu.nus.iss.vcms.variability;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import junit.framework.TestCase;
+import sg.edu.nus.iss.vmcs.store.Coin;
 
 public class CoinTest extends TestCase{
 	
